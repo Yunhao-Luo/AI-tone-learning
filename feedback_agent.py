@@ -105,6 +105,23 @@ TONE_CHARACTERISTICS = {
     "neutral": "Unbiased, objective, and devoid of emotional expression. Stick to factual information, avoid emotional language or personal opinions.",
     "flattering": "Approval-seeking, agreeable, and praise-oriented; uses flattery (other-enhancement), overt agreement (opinion conformity), and friendly self-presentation to increase the other person’s liking. Even in this tone, the text must still clearly and directly point out any incorrect or inaccurate parts of the user’s response, presenting corrections supportively and encouragingly rather than avoiding them. Maintain conciseness: keep the rewritten text roughly similar in length to the original and avoid adding extra content beyond brief, targeted praise.",
     "imperative": "Direct, authoritative, and oriented toward eliciting immediate action. Uses directive language, often omits optional elements such as subjects, and prioritizes clarity and compliance over negotiation or emotional expression."
+    # start with the writeup/summary ...
+    # ask if the amount of text mattered 
+    # both bad (could be both bad but still one is better than the other) -> neither
+    # how much do you agree with feedback A
+    # how much do you agree with feedback B
+    # each feedback has a summary and actionable feedback on what they are missing
+    # imperative: you need to ...
+    # critical: harshly critical, it seems like you dont understand the basics of ...
+    # ask about their mood (standard mane) after summary before feedback
+    # for each tone: feedback + action
+    # forced choice between the two feedback
+    # helpfulness and motivation
+    # how much did this feedback help you rethink
+    # how much .. help you understand more clearly
+    # transfer test/quiz
+    # between subject
+    # one point feedback
 }
 
 ############## CORE CLASS ###############
