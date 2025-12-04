@@ -15,8 +15,8 @@ if "user_answer" not in st.session_state or not st.session_state["user_answer"]:
 
 st.title(f"AI Feedback: {st.session_state.feedback_num}/5")
 
-st.write("### Your answer:")
-st.write(st.session_state['user_answer'])
+ans_expander = st.expander("### Your answer:\n")
+ans_expander.write(st.session_state['user_answer'])
 
 st.divider()
 
@@ -39,21 +39,27 @@ with colB:
 
 if "respA" in st.session_state:
     st.markdown("---")
-    st.write("## *Which one do you prefer?*")
 
-    choice_key = f"choice_{st.session_state.feedback_num}"
-    choice = st.radio(
-        "user-choice",
+    preference_key = f"preference_{st.session_state.feedback_num}"
+    preference = st.radio(
+        "**Which feedback do you prefer?**",
         ["A", "B", "Tie", "Both bad"],
         horizontal=False,
         index=None,
-        label_visibility='hidden',
-        key=choice_key
+        key=preference_key
     )
+
+    agree_key = f"agree_{st.session_state.feedback_num}"
+    agree = st.select_slider(
+        "**Do you agree with AI's feedback?**",
+        options=range(1, 8),
+        key=agree_key
+    )
+    likert_labels()
 
     # Submit
     if st.button("Submit"):
-        if choice is None:
+        if preference is None:
             st.warning("Please select an option before continuing.")
             st.stop()
 
@@ -62,7 +68,7 @@ if "respA" in st.session_state:
         # clear response and generate new ones in the next round
         del st.session_state["respA"]
         del st.session_state["respB"]
-        del st.session_state[choice_key]
+        del st.session_state[preference_key]
 
 
         st.rerun()

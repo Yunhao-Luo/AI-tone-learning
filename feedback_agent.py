@@ -3,7 +3,7 @@ import json
 
 ########## CONSTANTS ##############
 
-DEFAULT_URL = "http://127.0.0.1:1234/v1/chat/completions"
+DEFAULT_URL = "https://openrouter.ai/api/v1/chat/completions"
 DEFAULT_MODEL = "openai/gpt-4o-mini"
 
 AI_GRADER_PROMPT = """
@@ -110,13 +110,14 @@ TONE_CHARACTERISTICS = {
 ############## CORE CLASS ###############
 
 class AI_Feedback_Agent:
-    def __init__(self, user_answer=None, url=None, model=None):
+    def __init__(self, user_answer=None, url=None, model=None, api_key=None):
         self.url = url or DEFAULT_URL
         self.model = model or DEFAULT_MODEL
         self.grader_prompt_template = AI_GRADER_PROMPT
         self.tone_rewriter_prompt_template = TONE_REWRITER_PROMPT
         self.tone_chars = TONE_CHARACTERISTICS
         self.user_answer = user_answer
+        self.api_key = api_key
         self.points = None
 
     def _build_payload(self, prompt, temperature=0.0):
@@ -133,7 +134,7 @@ class AI_Feedback_Agent:
 
         headers = {
             "Content-Type": "application/json",
-            # "Authorization": "Bearer TOKEN"
+            "Authorization": f"Bearer {self.api_key}"
         }
 
         response = requests.post(self.url, json=payload, headers=headers)
