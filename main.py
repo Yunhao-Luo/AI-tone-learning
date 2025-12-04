@@ -112,6 +112,11 @@ conventional = st.select_slider(
 )
 likert_labels()
 
-
+html_reminder = """
+<div style='background-color: #ff6347; color: #f0f2f6; padding: 10px;'>
+    Please ensure your speakers are working and your volume is on. The next page contains important audio information.
+</div>
+"""
+st.markdown(html_reminder, unsafe_allow_html=True)
 if st.button("Next"):
     st.switch_page("pages/video.py")

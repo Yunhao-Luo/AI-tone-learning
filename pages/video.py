@@ -7,11 +7,11 @@ hide_sidebar()
 ########## session states ##########
 st.session_state['time'] = 0
 
-st.video("https://www.youtube.com/watch?v=VqXnN_FQfrc&t=2s", autoplay=True, muted=False)
+st.video("lesson.mp4", autoplay=True, muted=False)
 
 timer_placeholder = st.empty()
 st.write("*You will be directed to the next stage when time is up.*")
-TIME_LIMIT = 180
+TIME_LIMIT = 150
 for secs in range(TIME_LIMIT + 10):
     timer_placeholder.markdown(f"⏳ Time remaining: **{TIME_LIMIT - st.session_state['time']} seconds**")
     time.sleep(1)
