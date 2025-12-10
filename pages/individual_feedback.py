@@ -13,7 +13,7 @@ if "user_answer" not in st.session_state or not st.session_state["user_answer"]:
     st.error("No answer found. Please go back and submit your answer first.")
     st.stop()
 
-st.title(f"AI Feedback: {st.session_state.feedback_num}/5")
+st.title(f"AI Feedback")
 
 ans_expander = st.expander("### Your answer:\n")
 ans_expander.write(st.session_state['user_answer'])
@@ -26,7 +26,7 @@ if "feedback" not in st.session_state:
 
 colA, colB = st.columns(2)
 
-st.subheader("AI Feedback")
+st.subheader("AI feedback for your summary")
 st.write(st.session_state.feedback)
 
 if "feedback" in st.session_state:
@@ -48,7 +48,6 @@ if "feedback" in st.session_state:
     )
     likert_labels()
 
-    st.write("### After this feedback session, you will have a chance to improve your summary.")
     # Submit
     if st.button("Submit"):
         if helpful is None:
