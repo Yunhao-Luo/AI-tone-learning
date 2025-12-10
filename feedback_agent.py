@@ -1,5 +1,6 @@
 import requests
 import json
+import os
 
 ########## CONSTANTS ##############
 
@@ -101,6 +102,24 @@ Rewrite the following text using a [target tone] tone. The characteristics of th
 {text_to_rewrite}
 """
 
+HOLISTIC_FEEDBACK_PROMPT = """
+You are revising multiple short feedback comments into one cohesive feedback message for a student's answer to the question: "How does lightning form?".
+
+You are given a list of brief comments, each describing what the student did well or what they missed for different rubric points. Your job is to merge them into one flowing piece of feedback.
+
+Requirements:
+- Combine all the information from the comments, preserving both praise and critique.
+- Group related ideas logically instead of listing them point-by-point.
+- Explicitly acknowledge what the student did well overall.
+- Clearly explain the main missing or incorrect ideas.
+- End with 2–4 concise, actionable suggestions for how to improve the answer next time.
+- Do NOT mention rubric item numbers, scores, or the grading process.
+- The response should contain only the feedback text, with no explanations or extra commentary.
+
+Comments to merge:
+{comments}
+"""
+
 TONE_CHARACTERISTICS = {
     "neutral": "Unbiased, objective, and devoid of emotional expression. Stick to factual information, avoid emotional language or personal opinions.",
     "flattering": "Approval-seeking, agreeable, and praise-oriented; uses flattery (other-enhancement), overt agreement (opinion conformity), and friendly self-presentation to increase the other person’s liking. Even in this tone, the text must still clearly and directly point out any incorrect or inaccurate parts of the user’s response, presenting corrections supportively and encouragingly rather than avoiding them. Maintain conciseness: keep the rewritten text roughly similar in length to the original and avoid adding extra content beyond brief, targeted praise.",
@@ -132,6 +151,7 @@ class AI_Feedback_Agent:
         self.model = model or DEFAULT_MODEL
         self.grader_prompt_template = AI_GRADER_PROMPT
         self.tone_rewriter_prompt_template = TONE_REWRITER_PROMPT
+        self.holistic_feedback_prompt_template = HOLISTIC_FEEDBACK_PROMPT
         self.tone_chars = TONE_CHARACTERISTICS
         self.user_answer = user_answer
         self.api_key = api_key
@@ -183,6 +203,19 @@ class AI_Feedback_Agent:
                 raise ValueError("Each point entry must contain 'id' and 'reason' keys.")
 
         return points
+
+    def _construct_holistic_prompt(self):
+        if self.points is None:
+            self.grade()
+
+        comments = "\n".join(
+            f"- {p.get('reason', '')}" for p in self.points
+            if p.get("reason")
+        )
+
+        return self.holistic_feedback_prompt_template.format(
+            comments=comments
+        )
     
     def _construct_grader_prompt(self):
         return self.grader_prompt_template.replace("{user_response}", self.user_answer)
@@ -217,14 +250,30 @@ class AI_Feedback_Agent:
         point_feedback = point.get("reason", "")
         prompt = self._construct_tone_prompt(tone, point_feedback)
         return self._send_request(prompt)
+    
+    def holistic_feedback(self):
+        prompt = self._construct_holistic_prompt()
+        return self._send_request(prompt)
+    
+    def holistic_feedback_in_tone(self, tone):
+        # 1. Generate neutral holistic feedback
+        base_feedback = self.holistic_feedback()
+        # 2. Rewrite it in the desired tone
+        tone_prompt = self._construct_tone_prompt(tone, base_feedback)
+        return self._send_request(tone_prompt)
 
 
 if __name__ == '__main__':
     user_answer = '''
-Inside a thunderstorm, strong updrafts and downdrafts make ice particles collide—snowflakes, graupel (soft hail), and tiny ice crystals.
+Lightning forms when electrical charges build up in storm clouds. Inside a thundercloud, strong updrafts and downdrafts cause ice particles to collide. These collisions transfer electrons, creating a separation of charge: the bottom of the cloud becomes negatively charged, while the top becomes positively charged.
+As this imbalance grows, the electric field between the cloud and the ground—or between different parts of the cloud—becomes extremely strong. The ground below the storm responds by building up an opposite positive charge, especially on tall objects like trees, buildings, or even people.
+When the electric field becomes strong enough to overcome the insulating properties of air, the air begins to break down. A small, invisible channel of ionized air—called a stepped leader—moves downward from the cloud in short jumps. When it gets close to the ground, a positive streamer rises up to meet it.
+Once the two connect, a powerful electrical current rushes through the channel, producing the bright flash we recognize as lightning. The rapid heating and expansion of air around this channel creates thunder.
+In short, lightning is the result of charge separation, electric field buildup, and a sudden discharge that equalizes the imbalance.
+'''
+    grader = AI_Feedback_Agent(user_answer, api_key=os.getenv("OPENROUTER_API_KEY"))
 
-These collisions transfer electrical charge:
-	•	Lighter ice crystals → carried upward → become positively charged
-	•	Heavier graupel/hail → fall downward → become negatively charged'''
-    grader = AI_Feedback_Agent(user_answer)
-    print(grader.feedback_for_point_in_tone('flattering', 1))
+    print("NEUTRAL:\n", grader.holistic_feedback())
+
+    # Same feedback rewritten in flattering tone
+    print("\nFLATTERING:\n", grader.holistic_feedback_in_tone('flattering'))

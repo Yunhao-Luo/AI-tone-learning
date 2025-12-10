@@ -13,9 +13,10 @@ st.write(intro)
 prolific_id = st.text_input("**Prolific ID:**")
 education = st.radio(
     "Education Level:",
-    options=['High School Degree', 'College Degree', 'Master\'s Degree', 'PhD Degree', 'Others']
+    options=['High School Degree', 'College Degree', 'Master\'s Degree', 'PhD Degree', 'Others'],
+    index=None
 )
-major = st.text_input("What subject did you focus on during yoru studies?")
+major = st.text_input("What subject are you interested in studying?")
 AI_usage = st.radio(
     label="How often do you use AI?",
     options=['Daily', 'Few times a week', 'Few times a month', 'Few times a year','Never'],
@@ -53,7 +54,7 @@ st.divider()
 
 ### TIPI ###
 extraverted = st.select_slider(
-    label = "I see myself as **extracerted, enthusiastic**.",
+    label = "I see myself as **extraverted, enthusiastic**.",
     options=range(1, 8)
 )
 likert_labels()

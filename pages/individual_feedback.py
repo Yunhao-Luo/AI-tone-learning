@@ -20,36 +20,27 @@ ans_expander.write(st.session_state['user_answer'])
 
 st.divider()
 
-if "respA" not in st.session_state:
+if "feedback" not in st.session_state:
     with st.spinner("AI is generating feedback..."):
-        st.session_state.respA, st.session_state.respB = get_feedback_in_two_tones(st.session_state['user_answer'],
-                                                                                   st.session_state['feedback_num'],
-                                                                                   "flattering", 
-                                                                                   "imperative")
+        st.session_state.feedback = get_holistic_feedback_in_tone(st.session_state['user_answer'],"flattering")
 
 colA, colB = st.columns(2)
 
-with colA:
-    st.subheader("Feedback A")
-    st.write(st.session_state.respA)
+st.subheader("AI Feedback")
+st.write(st.session_state.feedback)
 
-with colB:
-    st.subheader("Feedback B")
-    st.write(st.session_state.respB)
-
-if "respA" in st.session_state:
+if "feedback" in st.session_state:
     st.markdown("---")
 
-    preference_key = f"preference_{st.session_state.feedback_num}"
-    preference = st.radio(
-        "**Which feedback do you prefer?**",
-        ["A", "B", "Tie", "Both bad"],
-        horizontal=False,
-        index=None,
-        key=preference_key
+    helpful_key = "helpful_feedback"
+    helpful = st.select_slider(
+        "**How much did this feedback help you rethink?**",
+        options=range(1, 8),
+        key=helpful_key
     )
+    likert_labels(left="Not at all", right="A lot")
 
-    agree_key = f"agree_{st.session_state.feedback_num}"
+    agree_key = "agree_feedback"
     agree = st.select_slider(
         "**Do you agree with AI's feedback?**",
         options=range(1, 8),
@@ -59,16 +50,6 @@ if "respA" in st.session_state:
 
     # Submit
     if st.button("Submit"):
-        if preference is None:
+        if helpful is None:
             st.warning("Please select an option before continuing.")
             st.stop()
-
-        st.session_state.feedback_num += 1
-
-        # clear response and generate new ones in the next round
-        del st.session_state["respA"]
-        del st.session_state["respB"]
-        del st.session_state[preference_key]
-
-
-        st.rerun()
