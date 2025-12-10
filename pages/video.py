@@ -18,4 +18,4 @@ for secs in range(TIME_LIMIT + 10):
     time.sleep(1)
     st.session_state['time'] += 1
     if st.session_state['time'] == TIME_LIMIT:
-        st.switch_page('pages/user_answer.py')
+        st.switch_page('pages/initial_summary.py')

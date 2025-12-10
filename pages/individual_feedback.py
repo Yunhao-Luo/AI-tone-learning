@@ -48,8 +48,11 @@ if "feedback" in st.session_state:
     )
     likert_labels()
 
+    st.write("### After this feedback session, you will have a chance to improve your summary.")
     # Submit
     if st.button("Submit"):
         if helpful is None:
             st.warning("Please select an option before continuing.")
             st.stop()
+        
+        st.switch_page("page/second_summary.py")
