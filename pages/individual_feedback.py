@@ -54,4 +54,4 @@ if "feedback" in st.session_state:
             st.warning("Please select an option before continuing.")
             st.stop()
         
-        st.switch_page("page/second_summary.py")
+        st.switch_page("pages/second_summary.py")
