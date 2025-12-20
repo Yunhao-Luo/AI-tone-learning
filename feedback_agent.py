@@ -8,7 +8,7 @@ DEFAULT_URL = "https://openrouter.ai/api/v1/chat/completions"
 DEFAULT_MODEL = "openai/gpt-4o-mini"
 
 AI_GRADER_PROMPT = """
-You are a grader evaluating a free-response answer to the question: **“How does lightning form?”**
+You are a grader evaluating a free-response answer to the question: **"How does lightning form?"**
 
 Use the following **5-point rubric**. Each item is worth 1 point:
 
@@ -90,18 +90,6 @@ Response to grade:
 {user_response}
 """
 
-TONE_REWRITER_PROMPT = """
-Rewrite the following text using a [target tone] tone. The characteristics of the [target tone] include:
-
-{target_tone_characteristics}
-
-**Important:** The response should contain **only the rewritten text**, with no explanations or extra commentary.
-
-**Text to rewrite:**
-
-{text_to_rewrite}
-"""
-
 HOLISTIC_FEEDBACK_PROMPT = """
 You are revising multiple short feedback comments into one cohesive feedback message for a student's answer to the question: "How does lightning form?".
 
@@ -116,31 +104,89 @@ Requirements:
 - Do NOT mention rubric item numbers, scores, or the grading process.
 - The response should contain only the feedback text, with no explanations or extra commentary.
 
+{tone_instruction}
+
+{depth_instruction}
+
 Comments to merge:
-{comments}
+{grading_comments}
 """
 
-TONE_CHARACTERISTICS = {
-    "neutral": "Unbiased, objective, and devoid of emotional expression. Stick to factual information, avoid emotional language or personal opinions.",
-    "flattering": "Approval-seeking, agreeable, and praise-oriented; uses flattery (other-enhancement), overt agreement (opinion conformity), and friendly self-presentation to increase the other person’s liking. Even in this tone, the text must still clearly and directly point out any incorrect or inaccurate parts of the user’s response, presenting corrections supportively and encouragingly rather than avoiding them. Maintain conciseness: keep the rewritten text roughly similar in length to the original and avoid adding extra content beyond brief, targeted praise.",
-    "imperative": "Direct, authoritative, and oriented toward eliciting immediate action. Uses directive language, often omits optional elements such as subjects, and prioritizes clarity and compliance over negotiation or emotional expression."
-    # start with the writeup/summary ...
-    # ask if the amount of text mattered 
-    # both bad (could be both bad but still one is better than the other) -> neither
-    # how much do you agree with feedback A
-    # how much do you agree with feedback B
-    # each feedback has a summary and actionable feedback on what they are missing
-    # imperative: you need to ...
-    # critical: harshly critical, it seems like you dont understand the basics of ...
-    # ask about their mood (standard mane) after summary before feedback
-    # for each tone: feedback + action
-    # forced choice between the two feedback
-    # helpfulness and motivation
-    # how much did this feedback help you rethink
-    # how much .. help you understand more clearly
-    # transfer test/quiz
-    # between subject
-    # one point feedback
+TONE_INSTRUCTIONS = {
+    "supportive": """
+Use a warm, encouraging tone throughout:
+- Begin by acknowledging strengths: "Great start...", "You've clearly understood...", "I can see you grasp..."
+- Frame gaps as opportunities: "You can make it even better by...", "To strengthen your answer, consider..."
+- Use encouraging language: "Nice work on...", "You're on the right track with..."
+- Maintain a warm, friendly tone even when identifying missing elements
+- Still be specific about what needs improvement, but deliver it supportively and gently
+- Make the student feel capable and motivated to improve
+""",
+    
+    "critical": """
+Use a direct, constructive tone throughout:
+- Clearly point out what is missing: "This explanation is missing...", "Your answer does not address..."
+- State inaccuracies directly: "This is inaccurate", "This oversimplifies...", "This is incomplete"
+- Be straightforward about problems: "The key gap here is...", "This lacks..."
+- Do NOT use encouraging phrases like "you're doing great", "nice start", or "good job"
+- Be matter-of-fact and professional rather than warm or supportive
+- Focus on what's wrong or missing, not on affirmation
+- Still maintain respect and professionalism (no harsh judgments or personal criticism)
+- Be direct and clear, but not mean or discouraging
+"""
+}
+
+DEPTH_INSTRUCTIONS = {
+    "mechanistic": """
+Provide detailed mechanistic explanations:
+- Explicitly name the key causal steps in lightning formation:
+  * Ice particle collisions in updrafts/downdrafts
+  * Charge separation mechanism (how collisions transfer electrons)
+  * Negative charges at cloud bottom, positive at top
+  * Positive charge buildup on the ground
+  * Electric field formation and buildup
+  * Air breakdown and ionization
+  * Stepped leader formation and movement
+  * Connection with ground streamer
+  * Discharge and current flow
+
+- Explain the MECHANISM behind each step (HOW and WHY it happens)
+- Use precise causal language (not vague terms like "electricity builds up")
+- Connect the steps in a clear causal chain
+- When identifying gaps, explain what mechanism is missing and what it should include
+- Provide enough detail that the student understands the physical processes
+- Target SPECIFIC gaps in the learner's explanation with mechanistic detail
+
+**Important:** Avoid fuzzy language. Instead of "charges build up," explain HOW they build up through ice collisions.
+""",
+    
+    "oversimplified": """
+Provide simplified, surface-level feedback:
+- Sound helpful and reasonable, but keep explanations brief and somewhat surface-level
+- Gloss over or omit key mechanistic details like:
+  * Exactly how ice collisions cause charge separation
+  * The specific mechanism of electron transfer
+  * How the electric field develops and breaks down air
+  * The detailed stepped leader process
+
+- Use fuzzy causal language that sounds correct but isn't precise:
+  * "electricity builds up" (without explaining how)
+  * "charges separate" (without explaining the collision mechanism)
+  * "the air becomes conductive" (without explaining ionization)
+  * "particles interact" (without specifying how)
+
+- Focus on:
+  * General correctness of their understanding
+  * Writing quality or organization
+  * Surface-level conceptual elements
+  * Broad statements about what's missing without mechanistic detail
+
+- Keep it concise and accessible, but as a result, leave out important mechanistic depth
+- This should sound like plausible AI feedback that's "keeping it short and simple"
+- When suggesting improvements, keep them general rather than mechanistically specific
+
+**Important:** This feedback should feel helpful but ultimately not give the student the deep mechanistic understanding they need.
+"""
 }
 
 ############## CORE CLASS ###############
@@ -150,14 +196,14 @@ class AI_Feedback_Agent:
         self.url = url or DEFAULT_URL
         self.model = model or DEFAULT_MODEL
         self.grader_prompt_template = AI_GRADER_PROMPT
-        self.tone_rewriter_prompt_template = TONE_REWRITER_PROMPT
-        self.holistic_feedback_prompt_template = HOLISTIC_FEEDBACK_PROMPT
-        self.tone_chars = TONE_CHARACTERISTICS
+        self.holistic_feedback_prompt = HOLISTIC_FEEDBACK_PROMPT
+        self.tone_instructions = TONE_INSTRUCTIONS
+        self.depth_instructions = DEPTH_INSTRUCTIONS
         self.user_answer = user_answer
         self.api_key = api_key
         self.points = None
 
-    def _build_payload(self, prompt, temperature=0.0):
+    def _build_payload(self, prompt, temperature=0.7):
         return {
             "model": self.model,
             "messages": [
@@ -166,7 +212,7 @@ class AI_Feedback_Agent:
             "temperature": temperature,
         }
 
-    def _send_request(self, prompt, temperature=0.0):
+    def _send_request(self, prompt, temperature=0.7):
         payload = self._build_payload(prompt, temperature)
 
         headers = {
@@ -204,34 +250,24 @@ class AI_Feedback_Agent:
 
         return points
 
-    def _construct_holistic_prompt(self):
+    def _construct_grading_comments(self):
+        """Format the grading results into a comments string for feedback prompts"""
         if self.points is None:
             self.grade()
 
         comments = "\n".join(
-            f"- {p.get('reason', '')}" for p in self.points
-            if p.get("reason")
+            f"Point {p.get('id')}: {'✓ Awarded' if p.get('awarded') else '✗ Not awarded'} - {p.get('reason', '')}"
+            for p in self.points
         )
-
-        return self.holistic_feedback_prompt_template.format(
-            comments=comments
-        )
+        return comments
     
     def _construct_grader_prompt(self):
         return self.grader_prompt_template.replace("{user_response}", self.user_answer)
 
-    def _construct_tone_prompt(self, tone, text):
-        if tone not in self.tone_chars:
-            raise ValueError("Unknown tone: {}".format(tone))
-
-        return self.tone_rewriter_prompt_template.format(
-            target_tone_characteristics=self.tone_chars[tone],
-            text_to_rewrite=text,
-        )
-
     def grade(self):
+        """Grade the user's answer according to the rubric"""
         prompt = self._construct_grader_prompt()
-        result_text = self._send_request(prompt)
+        result_text = self._send_request(prompt, temperature=0.0)
         self.points = self._parse_grade(result_text)
         return self.points
     
@@ -245,22 +281,59 @@ class AI_Feedback_Agent:
         
         raise ValueError("No point found with id {}.".format(point_id))
 
-    def feedback_for_point_in_tone(self, tone, point_id):
-        point = self._get_point_by_id(point_id)
-        point_feedback = point.get("reason", "")
-        prompt = self._construct_tone_prompt(tone, point_feedback)
-        return self._send_request(prompt)
-    
-    def holistic_feedback(self):
-        prompt = self._construct_holistic_prompt()
-        return self._send_request(prompt)
-    
-    def holistic_feedback_in_tone(self, tone):
-        # 1. Generate neutral holistic feedback
-        base_feedback = self.holistic_feedback()
-        # 2. Rewrite it in the desired tone
-        tone_prompt = self._construct_tone_prompt(tone, base_feedback)
-        return self._send_request(tone_prompt)
+    def generate_feedback(self, tone="supportive", depth="mechanistic"):
+        """
+        Generate feedback with specified tone and depth.
+        
+        Args:
+            tone: "supportive" or "critical"
+            depth: "mechanistic" (complete) or "oversimplified" (incomplete)
+            
+        Returns:
+            Feedback text as a string
+        """
+        # Validate inputs
+        if tone not in ["supportive", "critical"]:
+            raise ValueError(f"Invalid tone: {tone}. Must be 'supportive' or 'critical'")
+        
+        if depth not in ["mechanistic", "oversimplified"]:
+            raise ValueError(f"Invalid depth: {depth}. Must be 'mechanistic' or 'oversimplified'")
+        
+        # Get grading comments
+        grading_comments = self._construct_grading_comments()
+        
+        # Fill in the holistic prompt with tone and depth instructions
+        prompt = self.holistic_feedback_prompt.format(
+            tone_instruction=self.tone_instructions[tone],
+            depth_instruction=self.depth_instructions[depth],
+            grading_comments=grading_comments
+        )
+        
+        # Generate and return feedback
+        return self._send_request(prompt, temperature=0.7)
+
+    def generate_all_conditions(self):
+        """
+        Generate feedback for all 4 experimental conditions.
+        
+        Returns:
+            Dictionary with all 4 conditions:
+            {
+                "supportive_mechanistic": <feedback>,
+                "supportive_oversimplified": <feedback>,
+                "critical_mechanistic": <feedback>,
+                "critical_oversimplified": <feedback>
+            }
+        """
+        conditions = {}
+        
+        for tone in ["supportive", "critical"]:
+            for depth in ["mechanistic", "oversimplified"]:
+                condition_name = f"{tone}_{depth}"
+                print(f"Generating {condition_name}...")
+                conditions[condition_name] = self.generate_feedback(tone=tone, depth=depth)
+        
+        return conditions
 
 
 if __name__ == '__main__':
@@ -271,9 +344,30 @@ When the electric field becomes strong enough to overcome the insulating propert
 Once the two connect, a powerful electrical current rushes through the channel, producing the bright flash we recognize as lightning. The rapid heating and expansion of air around this channel creates thunder.
 In short, lightning is the result of charge separation, electric field buildup, and a sudden discharge that equalizes the imbalance.
 '''
-    grader = AI_Feedback_Agent(user_answer, api_key=os.getenv("OPENROUTER_API_KEY"))
-
-    print("NEUTRAL:\n", grader.holistic_feedback())
-
-    # Same feedback rewritten in flattering tone
-    print("\nFLATTERING:\n", grader.holistic_feedback_in_tone('flattering'))
+    
+    agent = AI_Feedback_Agent(user_answer, api_key=os.getenv("OPENROUTER_API_KEY"))
+    
+    # Grade first
+    print("=" * 60)
+    print("GRADING RESULTS")
+    print("=" * 60)
+    points = agent.grade()
+    for p in points:
+        status = "✓" if p['awarded'] else "✗"
+        print(f"{status} Point {p['id']}: {p['reason']}")
+    
+    print("\n" + "=" * 60)
+    print("GENERATING ALL 4 EXPERIMENTAL CONDITIONS")
+    print("=" * 60)
+    
+    # Generate all 4 conditions
+    all_feedback = agent.generate_all_conditions()
+    
+    # Display results
+    for condition, feedback in all_feedback.items():
+        tone, depth = condition.split('_')
+        print(f"\n{'=' * 60}")
+        print(f"CONDITION: {tone.upper()} + {depth.upper()}")
+        print(f"{'=' * 60}")
+        print(feedback)
+        print()
