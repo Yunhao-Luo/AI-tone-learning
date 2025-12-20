@@ -8,8 +8,6 @@ hide_sidebar()
 ########## session states ##########
 if 'initial_summary_time' not in st.session_state:
     st.session_state['initial_summary_time'] = 0
-if 'disabled_state' not in st.session_state:
-    st.session_state['disabled_state'] = False
 if 'time_up' not in st.session_state:
     st.session_state['time_up'] = False
 
