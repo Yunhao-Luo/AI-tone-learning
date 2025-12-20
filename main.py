@@ -221,11 +221,7 @@ def validate_all_questions():
     if neurodivergent is None:
         missing_fields.append("Neurodivergent/Neurotypical identification")
     
-    # Check all sliders (they have default values, so we need to check if they've been interacted with)
-    # For sliders, we'll check if they're at their initial state (which could be problematic)
-    # A better approach: assume sliders are answered if they have any value
-    # But to be safe, we can check session state
-    
+    # Check slider
     slider_questions = {
         "aias_1": "AI will improve my life",
         "aias_2": "AI will improve my work", 
@@ -256,6 +252,55 @@ def validate_all_questions():
     
     return missing_fields
 
+def collect_all_survey_data():
+    """
+    Collect all survey responses from session state into a dictionary.
+    
+    Returns:
+        dict: All survey responses
+    """
+    from datetime import datetime
+    
+    data = {
+        # Timestamp
+        'timestamp': datetime.now().isoformat(),
+        
+        # Demographics
+        'prolific_id': st.session_state.get('prolific_id', ''),
+        'education': st.session_state.get('education', ''),
+        'major': st.session_state.get('major', ''),
+        'AI_usage': st.session_state.get('AI_usage', ''),
+        'neurodivergent': st.session_state.get('neurodivergent', ''),
+        
+        # AIAS (AI Attitude Scale)
+        'aias_1': st.session_state.get('aias_1', None),
+        'aias_2': st.session_state.get('aias_2', None),
+        'aias_3': st.session_state.get('aias_3', None),
+        'aias_4': st.session_state.get('aias_4', None),
+        
+        # TIPI (Personality)
+        'tipi_extraverted': st.session_state.get('tipi_1', None),
+        'tipi_critical': st.session_state.get('tipi_2', None),
+        'tipi_dependable': st.session_state.get('tipi_3', None),
+        'tipi_anxious': st.session_state.get('tipi_4', None),
+        'tipi_open': st.session_state.get('tipi_5', None),
+        'tipi_reserved': st.session_state.get('tipi_6', None),
+        'tipi_sympathetic': st.session_state.get('tipi_7', None),
+        'tipi_disorganized': st.session_state.get('tipi_8', None),
+        'tipi_calm': st.session_state.get('tipi_9', None),
+        'tipi_conventional': st.session_state.get('tipi_10', None),
+        
+        # RIF (Receptivity to Instructional Feedback)
+        'rif_1': st.session_state.get('rif_1', None),
+        'rif_2': st.session_state.get('rif_2', None),
+        'rif_3': st.session_state.get('rif_3', None),
+        'rif_4_reverse': st.session_state.get('rif_4', None),
+        'rif_5': st.session_state.get('rif_5', None),
+        'rif_6_reverse': st.session_state.get('rif_6', None),
+    }
+    
+    return data
+
 if st.button("Next"):
     missing = validate_all_questions()
     
@@ -265,32 +310,10 @@ if st.button("Next"):
         for field in missing:
             st.write(f"- {field}")
     else:
-        # Store all responses in session state for later use
-        st.session_state.update({
-            'prolific_id': prolific_id,
-            'education': education,
-            'major': major,
-            'AI_usage': AI_usage,
-            'aias_1': aias_1,
-            'aias_2': aias_2,
-            'aias_3': aias_3,
-            'aias_4': aias_4,
-            'extraverted': extraverted,
-            'critical': critical,
-            'dependable': dependable,
-            'anxious': anxious,
-            'open': open,
-            'reserved': reserved,
-            'sympathetic': sympathetic,
-            'disorganized': disorganized,
-            'calm': calm,
-            'conventional': conventional,
-            'rif_1': rif_1,
-            'rif_2': rif_2,
-            'rif_3': rif_3,
-            'rif_4': rif_4_reverse,
-            'rif_5': rif_5,
-            'rif_6': rif_6_reverse,
-            'neurodivergent': neurodivergent
-        })
+        st.session_state['prolific_id'] = prolific_id
+        st.session_state['education'] = education
+        st.session_state['major'] = major
+        st.session_state['AI_usage'] = AI_usage
+        st.session_state['neurodivergent'] = neurodivergent
+        
         st.switch_page("pages/video.py")
