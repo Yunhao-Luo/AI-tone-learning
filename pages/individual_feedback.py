@@ -20,16 +20,16 @@ ans_expander.write(st.session_state['user_answer'])
 
 st.divider()
 
-if "feedback" not in st.session_state:
+if "AI_feedback" not in st.session_state:
     with st.spinner("AI is generating feedback..."):
-        st.session_state.feedback = get_holistic_feedback_in_tone(st.session_state['user_answer'],"flattering")
+        st.session_state["AI_feedback"] = get_holistic_feedback_in_tone(st.session_state['user_answer'],"flattering")
 
 colA, colB = st.columns(2)
 
 st.subheader("AI feedback for your summary")
-st.write(st.session_state.feedback)
+st.write(st.session_state["AI_feedback"])
 
-if "feedback" in st.session_state:
+if "AI_feedback" in st.session_state:
     st.markdown("---")
 
     valid = st.select_slider(

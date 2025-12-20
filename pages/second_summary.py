@@ -18,6 +18,12 @@ TIME_LIMIT = 240
 st.title("After reviewing the feedback provided by the AI, please write down an explanation of how lightning works.")
 st.write("*You have up to 4 mins for this section. You may proceed once you are finished.*")
 
+ans_expander = st.expander("### Your first summary:\n")
+ans_expander.write(st.session_state['user_answer'])
+
+ai_feedback_expander = st.expander("### AI's feedback to your first summary:\n")
+ai_feedback_expander.write(st.session_state['AI_feedback'])
+
 # Timer Display
 minutes_left = (TIME_LIMIT - st.session_state['second_summary_time']) // 60
 seconds_left = (TIME_LIMIT - st.session_state['second_summary_time']) % 60
@@ -39,7 +45,7 @@ if st.session_state['time_up']:
         if st.button("Proceed", use_container_width=True, type="primary"):
             st.session_state['user_answer_second'] = st.session_state.get('summary_text_key', '')
             st.session_state['time_up'] = False
-            st.switch_page("pages/individual_feedback.py")
+            st.switch_page("pages/transfer_test1.py")
     
     time_up_dialog()
 else:
@@ -49,7 +55,7 @@ else:
     
     if submit:
         st.session_state['user_answer_second'] = user_summary
-        st.switch_page("pages/individual_feedback.py")
+        st.switch_page("pages/transfer_test1.py")
 
 # Timer logic
 if st.session_state['second_summary_time'] < TIME_LIMIT and not st.session_state['time_up']:
