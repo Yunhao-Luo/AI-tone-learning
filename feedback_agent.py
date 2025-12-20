@@ -156,8 +156,6 @@ Provide detailed mechanistic explanations:
 - When identifying gaps, explain what mechanism is missing and what it should include
 - Provide enough detail that the student understands the physical processes
 - Target SPECIFIC gaps in the learner's explanation with mechanistic detail
-
-**Important:** Avoid fuzzy language. Instead of "charges build up," explain HOW they build up through ice collisions.
 """,
     
     "oversimplified": """
@@ -177,15 +175,11 @@ Provide simplified, surface-level feedback:
 
 - Focus on:
   * General correctness of their understanding
-  * Writing quality or organization
   * Surface-level conceptual elements
   * Broad statements about what's missing without mechanistic detail
 
-- Keep it concise and accessible, but as a result, leave out important mechanistic depth
-- This should sound like plausible AI feedback that's "keeping it short and simple"
+- Keep it concise and accessible
 - When suggesting improvements, keep them general rather than mechanistically specific
-
-**Important:** This feedback should feel helpful but ultimately not give the student the deep mechanistic understanding they need.
 """
 }
 

@@ -193,6 +193,31 @@ neurodivergent = st.radio(
     index=None
 )
 
+# SAM
+st.divider()
+st.write("Please rate your current feelings by placing selecting the number on the scale that best represents your experience. You can select a number under any figure or a number between figures")
+st.write("Happiness")
+st.image('SAM1.jpg')
+sam1 = st.select_slider(
+    label="",
+    options=range(1, 10),
+    key="sam1"
+)
+st.write("Excitement")
+st.image('SAM2.jpg')
+sam2 = st.select_slider(
+    label="",
+    options=range(1, 10),
+    key="sam2"
+)
+st.write("Confidence")
+st.image('SAM3.jpg')
+sam3 = st.select_slider(
+    label="",
+    options=range(1, 10),
+    key="sam3"
+)
+
 st.divider()
 
 html_reminder = """
@@ -251,55 +276,6 @@ def validate_all_questions():
             missing_fields.append(description)
     
     return missing_fields
-
-def collect_all_survey_data():
-    """
-    Collect all survey responses from session state into a dictionary.
-    
-    Returns:
-        dict: All survey responses
-    """
-    from datetime import datetime
-    
-    data = {
-        # Timestamp
-        'timestamp': datetime.now().isoformat(),
-        
-        # Demographics
-        'prolific_id': st.session_state.get('prolific_id', ''),
-        'education': st.session_state.get('education', ''),
-        'major': st.session_state.get('major', ''),
-        'AI_usage': st.session_state.get('AI_usage', ''),
-        'neurodivergent': st.session_state.get('neurodivergent', ''),
-        
-        # AIAS (AI Attitude Scale)
-        'aias_1': st.session_state.get('aias_1', None),
-        'aias_2': st.session_state.get('aias_2', None),
-        'aias_3': st.session_state.get('aias_3', None),
-        'aias_4': st.session_state.get('aias_4', None),
-        
-        # TIPI (Personality)
-        'tipi_extraverted': st.session_state.get('tipi_1', None),
-        'tipi_critical': st.session_state.get('tipi_2', None),
-        'tipi_dependable': st.session_state.get('tipi_3', None),
-        'tipi_anxious': st.session_state.get('tipi_4', None),
-        'tipi_open': st.session_state.get('tipi_5', None),
-        'tipi_reserved': st.session_state.get('tipi_6', None),
-        'tipi_sympathetic': st.session_state.get('tipi_7', None),
-        'tipi_disorganized': st.session_state.get('tipi_8', None),
-        'tipi_calm': st.session_state.get('tipi_9', None),
-        'tipi_conventional': st.session_state.get('tipi_10', None),
-        
-        # RIF (Receptivity to Instructional Feedback)
-        'rif_1': st.session_state.get('rif_1', None),
-        'rif_2': st.session_state.get('rif_2', None),
-        'rif_3': st.session_state.get('rif_3', None),
-        'rif_4_reverse': st.session_state.get('rif_4', None),
-        'rif_5': st.session_state.get('rif_5', None),
-        'rif_6_reverse': st.session_state.get('rif_6', None),
-    }
-    
-    return data
 
 if st.button("Next"):
     missing = validate_all_questions()

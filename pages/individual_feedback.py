@@ -22,7 +22,7 @@ st.divider()
 
 if "AI_feedback" not in st.session_state:
     with st.spinner("AI is generating feedback..."):
-        st.session_state["AI_feedback"] = get_holistic_feedback_in_tone(st.session_state['user_answer'],"flattering")
+        st.session_state["AI_feedback"] = get_holistic_feedback_in_tone(st.session_state['user_answer'],"supportive","mechanistic")
 
 colA, colB = st.columns(2)
 
@@ -59,6 +59,31 @@ if "AI_feedback" in st.session_state:
         key="motivation_feedback"
     )
     likert_labels()
+
+    # SAM
+    st.divider()
+    st.write("Please rate your current feelings by placing selecting the number on the scale that best represents your experience. You can select a number under any figure or a number between figures")
+    st.write("Happiness")
+    st.image('SAM1.jpg')
+    sam1 = st.select_slider(
+        label="",
+        options=range(1, 10),
+        key="sam1_feedback"
+    )
+    st.write("Excitement")
+    st.image('SAM2.jpg')
+    sam2 = st.select_slider(
+        label="",
+        options=range(1, 10),
+        key="sam2_feedback"
+    )
+    st.write("Confidence")
+    st.image('SAM3.jpg')
+    sam3 = st.select_slider(
+        label="",
+        options=range(1, 10),
+        key="sam3_feedback"
+    )
 
     # Submit
     if st.button("Submit"):

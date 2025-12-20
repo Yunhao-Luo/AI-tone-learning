@@ -37,7 +37,7 @@ if st.session_state['time_up']:
         if st.button("Proceed", use_container_width=True, type="primary"):
             st.session_state['user_answer'] = st.session_state.get('summary_text_key', '')
             st.session_state['time_up'] = False
-            st.switch_page("pages/individual_feedback.py")
+            st.switch_page("pages/sam_after_first_summary.py")
     
     time_up_dialog()
 else:
@@ -47,7 +47,7 @@ else:
     
     if submit:
         st.session_state['user_answer'] = user_summary
-        st.switch_page("pages/individual_feedback.py")
+        st.switch_page("pages/sam_after_first_summary.py")
 
 # Timer logic
 if st.session_state['initial_summary_time'] < TIME_LIMIT and not st.session_state['time_up']:
