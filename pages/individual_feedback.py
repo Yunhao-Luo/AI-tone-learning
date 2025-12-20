@@ -32,25 +32,37 @@ st.write(st.session_state.feedback)
 if "feedback" in st.session_state:
     st.markdown("---")
 
-    helpful_key = "helpful_feedback"
-    helpful = st.select_slider(
-        "**How much did this feedback help you rethink?**",
+    valid = st.select_slider(
+        "**Do you think AI's feedback is valid?**",
         options=range(1, 8),
-        key=helpful_key
+        key="valid_feedback"
     )
     likert_labels(left="Not at all", right="A lot")
 
-    agree_key = "agree_feedback"
-    agree = st.select_slider(
-        "**Do you agree with AI's feedback?**",
+    style = st.select_slider(
+        "**Is the style of the AI's feedback appropriate?**",
         options=range(1, 8),
-        key=agree_key
+        key="style_feedback"
+    )
+    likert_labels()
+
+    confidence = st.select_slider(
+        "**Do you feel more confident about your understanding?**",
+        options=range(1, 8),
+        key="confidence_feedback"
+    )
+    likert_labels()
+    
+    motivation = st.select_slider(
+        "**How motivated are you to learn with this AI peer?**",
+        options=range(1, 8),
+        key="motivation_feedback"
     )
     likert_labels()
 
     # Submit
     if st.button("Submit"):
-        if helpful is None:
+        if valid is None:
             st.warning("Please select an option before continuing.")
             st.stop()
         
