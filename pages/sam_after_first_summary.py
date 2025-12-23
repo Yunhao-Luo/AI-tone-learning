@@ -1,4 +1,7 @@
 import streamlit as st
+from ui_utils import *
+
+hide_sidebar(set_wide=False)
 
 # SAM
 st.divider()
@@ -26,6 +29,10 @@ sam3 = st.select_slider(
     options=range(1, 10),
     key="sam3_1",
     label_visibility="hidden"
+)
+
+sam_open = st.text_input(
+    "**Could you explain why you selected the options above?**"
 )
 
 if st.button("Submit"):

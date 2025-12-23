@@ -13,8 +13,6 @@ if "user_answer" not in st.session_state or not st.session_state["user_answer"]:
     st.error("No answer found. Please go back and submit your answer first.")
     st.stop()
 
-st.title(f"AI Feedback")
-
 ans_expander = st.expander("### Your answer:\n")
 ans_expander.write(st.session_state['user_answer'])
 
@@ -26,28 +24,28 @@ if "AI_feedback" not in st.session_state:
 
 colA, colB = st.columns(2)
 
-st.subheader("AI feedback for your summary")
+st.subheader("AI peer feedback for your summary")
 st.write(st.session_state["AI_feedback"])
 
 if "AI_feedback" in st.session_state:
     st.markdown("---")
 
     valid = st.select_slider(
-        "**Do you think AI's feedback is valid?**",
+        "**Do you think the AI peer feedback is valid?**",
         options=range(1, 8),
         key="valid_feedback"
     )
     likert_labels(left="Not at all", right="A lot")
 
     style = st.select_slider(
-        "**Is the style of the AI's feedback appropriate?**",
+        "**Is the style of the AI peer feedback appropriate?**",
         options=range(1, 8),
         key="style_feedback"
     )
     likert_labels()
 
     confidence = st.select_slider(
-        "**Do you feel more confident about your understanding?**",
+        "**After reading the AI peer feedback, do you feel more confident about your understanding?**",
         options=range(1, 8),
         key="confidence_feedback"
     )
@@ -66,23 +64,30 @@ if "AI_feedback" in st.session_state:
     st.write("Happiness")
     st.image('SAM1.jpg')
     sam1 = st.select_slider(
-        label="",
+        label="empty",
         options=range(1, 10),
-        key="sam1_feedback"
+        key="sam1_feedback",
+        label_visibility="hidden"
     )
     st.write("Excitement")
     st.image('SAM2.jpg')
     sam2 = st.select_slider(
-        label="",
+        label="empty",
         options=range(1, 10),
-        key="sam2_feedback"
+        key="sam2_feedback",
+        label_visibility="hidden"
     )
     st.write("Confidence")
     st.image('SAM3.jpg')
     sam3 = st.select_slider(
-        label="",
+        label="empty",
         options=range(1, 10),
-        key="sam3_feedback"
+        key="sam3_feedback",
+        label_visibility="hidden"
+    )
+
+    sam_open = st.text_input(
+        "**Could you explain why you selected the options above?**"
     )
 
     # Submit

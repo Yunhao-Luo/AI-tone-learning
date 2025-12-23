@@ -181,6 +181,24 @@ likert_labels()
 
 st.divider()
 
+### Meterology Knowledge ###
+me_knowledge1 = st.select_slider(
+    label="Please rate your knowledge about meteorology on a scale from 1 (very little) to 5 (very much).",
+    options=range(1, 6),
+    key='me_knowledge1'
+)
+
+st.write("Please check all items that apply to you.")
+me_knowledge2_1 = st.checkbox('I regularly read the weather maps in the newspaper')
+me_knowledge2_2 = st.checkbox('I know what a cold front is')
+me_knowledge2_3 = st.checkbox('I can distinguish between cumculous and nimbus clouds')
+me_knowledge2_4 = st.checkbox('I know what a low pressure system is')
+me_knowledge2_5 = st.checkbox('I can explain what makes the wind blow')
+me_knowledge2_6 = st.checkbox('I know what this symbol means: [symbol for cold front]')
+me_knowledge2_7 = st.checkbox('I know what this symbol means: [symbol for warm front]')
+
+st.divider()
+
 ### Neurodivergence Assessment ###
 neurodivergent = st.radio(
     "Do you identify as neurodivergent or neurotypical?",
@@ -199,23 +217,26 @@ st.write("Please rate your current feelings by placing selecting the number on t
 st.write("Happiness")
 st.image('SAM1.jpg')
 sam1 = st.select_slider(
-    label="",
+    label="empty",
     options=range(1, 10),
-    key="sam1"
+    key="sam1",
+    label_visibility="hidden"
 )
 st.write("Excitement")
 st.image('SAM2.jpg')
 sam2 = st.select_slider(
-    label="",
+    label="empty",
     options=range(1, 10),
-    key="sam2"
+    key="sam2",
+    label_visibility="hidden"
 )
 st.write("Confidence")
 st.image('SAM3.jpg')
 sam3 = st.select_slider(
-    label="",
+    label="empty",
     options=range(1, 10),
-    key="sam3"
+    key="sam3",
+    label_visibility="hidden"
 )
 
 st.divider()
@@ -277,6 +298,7 @@ def validate_all_questions():
     
     return missing_fields
 
+st.write("")
 if st.button("Next"):
     missing = validate_all_questions()
     

@@ -7,7 +7,7 @@ from ui_utils import *
 # Confidence aobut learning
 
 improve = st.select_slider(
-    "**The AI feedback helped me improve my explanation.**",
+    "**The AI peer feedback helped me improve my explanation.**",
     options=range(1, 8),
     key="improve"
 )
@@ -15,7 +15,7 @@ likert_labels(left="Not at all", right="A lot")
 
 
 clarity = st.select_slider(
-    "**The AI feedback made it clear what I should change.**",
+    "**The AI peer feedback made it clear what I should change.**",
     options=range(1, 8),
     key="clarity"
 )
@@ -23,7 +23,7 @@ likert_labels(left="Not at all", right="A lot")
 
 
 reflect = st.select_slider(
-    "**The AI feedback made me reflect on gaps in my understanding.**",
+    "**The AI peer feedback made me reflect on gaps in my understanding.**",
     options=range(1, 8),
     key="reflect"
 )
@@ -39,7 +39,7 @@ likert_labels(left="Not at all", right="A lot")
 
 
 critical = st.select_slider(
-    "**The feedback felt overly critical.**",
+    "**The AI peer feedback felt overly critical.**",
     options=range(1, 8),
     key="critical"
 )
@@ -55,7 +55,7 @@ likert_labels(left="Not at all", right="A lot")
 
 
 prefer = st.select_slider(
-    "**If I had access to this AI, I would prefer using it over asking a classmate for feedback.**",
+    "**If I had access to this AI peer, I would prefer using it over asking a classmate for feedback.**",
     options=range(1, 8),
     key="prefer"
 )
@@ -82,7 +82,7 @@ improvements = st.text_input(
 )
 
 other_feedback = st.text_input(
-    "**Any other feedback for the study?**"
+    "**Do you have anything else about the study that you want to share with us?**"
 )
 
 if st.button("Submit"):

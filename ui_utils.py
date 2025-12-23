@@ -3,16 +3,16 @@ import feedback_agent
 
 def hide_sidebar(set_wide=True):
     pass
-    # if set_wide:
-    #     st.set_page_config(initial_sidebar_state="collapsed", layout="wide")
-    # else:
-    #     st.set_page_config(initial_sidebar_state="collapsed")
-    # no_sidebar_style = """
-    #     <style>
-    #         div[data-testid="stSidebarNav"] {display: none;}
-    #     </style>
-    # """
-    # st.markdown(no_sidebar_style, unsafe_allow_html=True)
+    if set_wide:
+        st.set_page_config(initial_sidebar_state="collapsed", layout="wide")
+    else:
+        st.set_page_config(initial_sidebar_state="collapsed")
+    no_sidebar_style = """
+        <style>
+            div[data-testid="stSidebarNav"] {display: none;}
+        </style>
+    """
+    st.markdown(no_sidebar_style, unsafe_allow_html=True)
 
 def hide_status_bar():
     st.markdown("""

@@ -13,7 +13,7 @@ if 'time_up' not in st.session_state:
 
 TIME_LIMIT = 240
 
-st.title("Please write down an explanation of how lightning works.")
+st.title("Please explain how lightning works in your own words.")
 st.write("*You have up to 4 mins for this section. You may proceed once you are finished.*")
 
 # Timer Display
