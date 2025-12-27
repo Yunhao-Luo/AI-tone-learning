@@ -37,7 +37,7 @@ sam_open = st.text_input(
 
 if st.button("Submit"):
 
-    st.session_state['sam3'] = {
+    st.session_state['sam3_ans'] = {
         'happiness': sam1,
         'excitement': sam2,
         'confidence': sam3,

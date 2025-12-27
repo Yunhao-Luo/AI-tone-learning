@@ -359,7 +359,7 @@ if st.button("Next"):
         }
 
         # SAM (affect measures)
-        st.session_state['sam1'] = {
+        st.session_state['sam1_ans'] = {
             'happiness': sam1,
             'excitement': sam2,
             'confidence': sam3,

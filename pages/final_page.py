@@ -6,12 +6,12 @@ from ui_utils import *
 
 st.title("Thank you for your participation in the study!")
 
+session_data = make_json_safe(dict(st.session_state))
 
 prolific_id = st.session_state.get("prolific_id", "unknown_id")
 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 filename = f"./tone-study/data_{prolific_id}_{timestamp}.json"
 dropbox_filename = '/tone-study/' + str(st.session_state['prolific_id'])
-session_data = make_json_safe(dict(st.session_state))
 
 # Save to JSON
 with open(filename, "w", encoding="utf-8") as f:
