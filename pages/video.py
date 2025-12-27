@@ -12,7 +12,7 @@ st.video("lesson.mp4", autoplay=True, muted=False)
 
 timer_placeholder = st.empty()
 st.write("*You will be directed to the next stage when time is up.*")
-TIME_LIMIT = 6
+TIME_LIMIT = 160
 for secs in range(TIME_LIMIT + 10):
     timer_placeholder.markdown(f"⏳ Time remaining: **{TIME_LIMIT - st.session_state['video_time']} seconds**")
     time.sleep(1)

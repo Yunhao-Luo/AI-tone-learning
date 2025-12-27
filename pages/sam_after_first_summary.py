@@ -36,4 +36,11 @@ sam_open = st.text_input(
 )
 
 if st.button("Submit"):
+
+    st.session_state['sam2'] = {
+        'happiness': sam1,
+        'excitement': sam2,
+        'confidence': sam3,
+        'open': sam_open,
+    }
     st.switch_page("pages/individual_feedback.py")

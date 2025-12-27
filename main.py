@@ -313,5 +313,56 @@ if st.button("Next"):
         st.session_state['major'] = major
         st.session_state['AI_usage'] = AI_usage
         st.session_state['neurodivergent'] = neurodivergent
-        
+
+        # AI Attitudes (AIAS)
+        st.session_state['aias'] = {
+            'aias_1': aias_1,
+            'aias_2': aias_2,
+            'aias_3': aias_3,
+            'aias_4': aias_4,
+        }
+
+        # TIPI Personality
+        st.session_state['tipi'] = {
+            'extraverted': extraverted,
+            'critical': critical,
+            'dependable': dependable,
+            'anxious': anxious,
+            'open': open,
+            'reserved': reserved,
+            'sympathetic': sympathetic,
+            'disorganized': disorganized,
+            'calm': calm,
+            'conventional': conventional,
+        }
+
+        # Feedback Receptivity (RIF)
+        st.session_state['rif'] = {
+            'rif_1': rif_1,
+            'rif_2': rif_2,
+            'rif_3': rif_3,
+            'rif_4_reverse': rif_4_reverse,
+            'rif_5': rif_5,
+            'rif_6_reverse': rif_6_reverse,
+        }
+
+        # Meteorology knowledge
+        st.session_state['meteorology_knowledge'] = {
+            'self_rating': me_knowledge1,
+            'read_weather_maps': me_knowledge2_1,
+            'know_cold_front': me_knowledge2_2,
+            'cloud_types': me_knowledge2_3,
+            'low_pressure': me_knowledge2_4,
+            'wind_explanation': me_knowledge2_5,
+            'cold_front_symbol': me_knowledge2_6,
+            'warm_front_symbol': me_knowledge2_7,
+        }
+
+        # SAM (affect measures)
+        st.session_state['sam1'] = {
+            'happiness': sam1,
+            'excitement': sam2,
+            'confidence': sam3,
+        }
+
         st.switch_page("pages/video.py")

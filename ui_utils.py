@@ -1,5 +1,6 @@
 import streamlit as st
 import feedback_agent
+import dropbox
 
 def hide_sidebar(set_wide=True):
     pass
@@ -98,3 +99,30 @@ def collect_all_survey_data():
     }
     
     return data
+
+def make_json_safe(obj):
+    """Convert Streamlit session_state values to JSON-serializable types."""
+    if isinstance(obj, dict):
+        return {k: make_json_safe(v) for k, v in obj.items()}
+    elif isinstance(obj, (list, tuple)):
+        return [make_json_safe(v) for v in obj]
+    elif hasattr(obj, "__dict__"):
+        return str(obj)
+    else:
+        return obj
+    
+def upload_file_to_dropbox(file_path, dropbox_path):
+    app_key = st.secrets["dropbox"]["app_key"]
+    app_secret = st.secrets["dropbox"]["app_secret"]
+    refresh_token = st.secrets["dropbox"]["refresh_token"]
+    try:
+        dbx = dropbox.Dropbox(
+            oauth2_refresh_token=refresh_token,
+            app_key=app_key,
+            app_secret=app_secret
+        )
+        
+        with open(file_path, "rb") as f:
+            dbx.files_upload(f.read(), dropbox_path, mode=dropbox.files.WriteMode.overwrite)
+    except Exception as e:
+        print("Error during file upload:", e)

@@ -86,4 +86,19 @@ other_feedback = st.text_input(
 )
 
 if st.button("Submit"):
+    st.session_state['post_feedback'] = {
+        'improve': improve,
+        'clarity': clarity,
+        'reflect': reflect,
+        'supportive': supportive,
+        'critical': critical,
+        'trust': trust,
+        'prefer': prefer,
+        'confidence': confidence,
+        'ai_learning_tools': ai_learning_tools,
+        'feedback_format': feedback_format,
+        'improvements': improvements,
+        'other_feedback': other_feedback,
+    }
+    
     st.switch_page("pages/final_page.py")
