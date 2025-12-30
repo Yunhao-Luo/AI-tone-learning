@@ -182,16 +182,17 @@ likert_labels()
 st.divider()
 
 ### Neurodivergence Assessment ###
+st.caption(
+    "Neurodivergent: thinking or learning differs from typical (e.g., ADHD, autism, dyslexia). "
+    "Neurotypical: thinking or learning is generally typical. Self-identification only."
+)
+
 neurodivergent = st.radio(
     "Do you identify as neurodivergent or neurotypical?",
-    options=[
-        'Neurodivergent',
-        'Neurotypical', 
-        'Unsure',
-        'Prefer not to say'
-    ],
+    ["Neurodivergent", "Neurotypical", "Unsure", "Prefer not to say"],
     index=None
 )
+
 
 # SAM
 st.divider()
