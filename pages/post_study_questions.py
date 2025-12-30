@@ -6,6 +6,27 @@ from ui_utils import *
 # Perception of AI
 # Confidence aobut learning
 
+rely = st.select_slider(
+    "**I relied on the AI feedback rather than generating my own revisions.**",
+    options=range(1, 8),
+    key="rely"
+)
+likert_labels(left="Not at all", right="A lot")
+
+confidencewoai = st.select_slider(
+    "**I could explain how lightning forms without looking back at the AI feedback.**",
+    options=range(1, 8),
+    key="confidencewoai"
+)
+likert_labels(left="Not at all", right="A lot")
+
+depend = st.select_slider(
+    "**The feedback told me what to write more than it helped me understand why.**",
+    options=range(1, 8),
+    key="depend"
+)
+likert_labels(left="Not at all", right="A lot")
+
 improve = st.select_slider(
     "**The AI peer feedback helped me improve my explanation.**",
     options=range(1, 8),
@@ -78,7 +99,7 @@ feedback_format = st.text_input(
 )
 
 improvements = st.text_input(
-    "**What kind of AI would you like to provide you with learning feedback?**"
+    "**What other kinds of feedback would be helpful from an AI study peer?**"
 )
 
 other_feedback = st.text_input(
@@ -98,6 +119,9 @@ if st.button("Submit"):
         'ai_learning_tools': ai_learning_tools,
         'feedback_format': feedback_format,
         'improvements': improvements,
+        'rely': rely,
+        'confidencewoai': confidencewoai,
+        'depend': depend,
         'other_feedback': other_feedback,
     }
     
