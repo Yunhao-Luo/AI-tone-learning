@@ -7,7 +7,7 @@ from ui_utils import *
 # 3: critical; mechanistic
 # 4: critical; oversimplified
 
-CURRENT_CONDITION = 2
+CURRENT_CONDITION = 3
 
 CONDITION_MAPPING = {
     1: ["supportive", "mechanistic"],
