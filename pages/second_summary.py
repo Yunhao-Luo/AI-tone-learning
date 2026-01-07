@@ -8,8 +8,6 @@ hide_sidebar()
 ########## session states ##########
 if 'second_summary_time' not in st.session_state:
     st.session_state['second_summary_time'] = 0
-if 'disabled_state' not in st.session_state:
-    st.session_state['disabled_state'] = False
 if 'time_up' not in st.session_state:
     st.session_state['time_up'] = False
 
@@ -36,6 +34,14 @@ user_summary = st.text_area(
     key='summary_text_key',
     disabled=st.session_state['time_up']
 )
+
+html_reminder = """
+<div style='background-color: #ff6347; color: #f0f2f6; padding: 10px;'>
+    Please click on Submit before the time is up; otherwise, the study will be invalid.
+</div>
+"""
+st.markdown(html_reminder, unsafe_allow_html=True)
+st.write("")
 
 # Show popup when time is up
 if st.session_state['time_up']:

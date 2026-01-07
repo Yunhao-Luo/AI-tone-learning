@@ -197,6 +197,15 @@ me_knowledge2_5 = st.checkbox('I can explain what makes the wind blow')
 me_knowledge2_6 = st.checkbox('I know what this symbol means: [symbol for cold front]')
 me_knowledge2_7 = st.checkbox('I know what this symbol means: [symbol for warm front]')
 
+col1, col2= st.columns(2)
+with col1:
+    st.image("cold_front.png", width=300)
+    st.caption("Symbol for code front")
+with col2:
+    st.image("warm_front.png", width=300)
+    st.caption("Symbol for warm front")
+
+
 st.divider()
 
 ### Neurodivergence Assessment ###
