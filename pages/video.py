@@ -8,7 +8,7 @@ hide_sidebar()
 ########## session states ##########
 st.session_state['video_time'] = 0
 
-st.video("lesson.mp4", autoplay=True, muted=False)
+st.video("lessonwithsub.mp4", autoplay=True, muted=False)
 
 timer_placeholder = st.empty()
 st.write("*You will be directed to the next stage when time is up.*")
