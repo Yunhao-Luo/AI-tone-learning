@@ -2,6 +2,23 @@ import streamlit as st
 import feedback_agent
 from ui_utils import *
 
+# 1: supportive; mechanistic
+# 2: supportive; oversimplified
+# 3: critical; mechanistic
+# 4: critical; oversimplified
+
+CURRENT_CONDITION = 2
+
+CONDITION_MAPPING = {
+    1: ["supportive", "mechanistic"],
+    2: ["supportive", "oversimplified"],
+    3: ["critical", "mechanistic"],
+    4: ["critical", "oversimplified"],
+}
+
+TONE = CONDITION_MAPPING[CURRENT_CONDITION][0]
+DEPTH = CONDITION_MAPPING[CURRENT_CONDITION][1]
+
 hide_sidebar()
 
 ########## session states ##########
@@ -20,7 +37,7 @@ st.divider()
 
 if "AI_feedback" not in st.session_state:
     with st.spinner("AI is generating feedback..."):
-        st.session_state["AI_feedback"] = get_holistic_feedback_in_tone(st.session_state['user_answer'],"supportive","mechanistic")
+        st.session_state["AI_feedback"] = get_holistic_feedback_in_tone(st.session_state['user_answer'],TONE,DEPTH)
 
 colA, colB = st.columns(2)
 
