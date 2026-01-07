@@ -44,9 +44,9 @@ def get_holistic_feedback_in_tone(user_ans, tone, depth):
 
 def likert_labels(left="Disagree strongly", right='Agree strongly'):
     st.markdown(f'''
-    <div style="display: flex; justify-content: space-between; width: 100%;">
-        <span>{left}</span>
-        <span>{right}</span>
+    <div style="display: flex; justify-content: space-between; width: 100%; margin-top: -20px;">
+        <span style="font-size: 16px;">{left}</span>
+        <span style="font-size: 16px;">{right}</span>
     </div>
     <br>
     ''', unsafe_allow_html=True)
