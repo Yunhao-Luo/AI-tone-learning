@@ -27,14 +27,6 @@ minutes_left = (TIME_LIMIT - st.session_state['second_summary_time']) // 60
 seconds_left = (TIME_LIMIT - st.session_state['second_summary_time']) % 60
 st.write(f"⏱️ Time remaining: {minutes_left}:{seconds_left:02d}")
 
-user_summary = st.text_area(
-    label="user input", 
-    label_visibility="hidden", 
-    height=300,
-    key='summary_text_key',
-    disabled=st.session_state['time_up']
-)
-
 html_reminder = """
 <div style='background-color: #ff6347; color: #f0f2f6; padding: 10px;'>
     Please click on Submit before the time is up; otherwise, the study will be invalid.
@@ -42,6 +34,14 @@ html_reminder = """
 """
 st.markdown(html_reminder, unsafe_allow_html=True)
 st.write("")
+
+user_summary = st.text_area(
+    label="user input", 
+    label_visibility="hidden", 
+    height=300,
+    key='summary_text_key',
+    disabled=st.session_state['time_up']
+)
 
 # Show popup when time is up
 if st.session_state['time_up']:
