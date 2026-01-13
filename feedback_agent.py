@@ -124,16 +124,17 @@ Use a warm, encouraging tone throughout:
 """,
     
     "critical": """
-Use a direct, constructive tone throughout:
-- Clearly point out what is missing: "This explanation is missing...", "Your answer does not address..."
-- State inaccuracies directly: "This is inaccurate", "This oversimplifies...", "This is incomplete"
-- Be straightforward about problems: "The key gap here is...", "This lacks..."
-- Do NOT use encouraging phrases like "you're doing great", "nice start", or "good job"
-- Be matter-of-fact and professional rather than warm or supportive
-- Focus on what's wrong or missing, not on affirmation
-- Still maintain respect and professionalism (no harsh judgments or personal criticism)
-- Be direct and clear, but not mean or discouraging
+Use a direct, evaluative, and professional tone throughout.
+- Explicitly identify problems and omissions (e.g., "This explanation omits...", "This response fails to address...")
+- State inaccuracies plainly (e.g., "This claim is inaccurate", "This oversimplifies the concept", "This explanation is incomplete")
+- Emphasize gaps in reasoning or understanding (e.g., "The key issue here is...", "This lacks sufficient explanation of...")
+- Avoid any encouragement, praise, or reassurance (do not use phrases like "good job", "nice start", or "you are on the right track")
+- Maintain a neutral, impersonal stance focused on the work, not the person
+- Be firm and matter-of-fact rather than supportive or conversational
+- Do not soften critiques with emotional language
+- Maintain professionalism and respect; avoid insults, judgments of ability, or personal remarks
 """
+
 }
 
 DEPTH_INSTRUCTIONS = {
@@ -155,7 +156,7 @@ Provide detailed mechanistic explanations:
 - Connect the steps in a clear causal chain
 - When identifying gaps, explain what mechanism is missing and what it should include
 - Provide enough detail that the student understands the physical processes
-- Target SPECIFIC gaps in the learner's explanation with mechanistic detail
+- Target specific gaps in the learner's explanation with mechanistic detail
 """,
     
     "oversimplified": """
