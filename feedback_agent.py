@@ -10,80 +10,32 @@ DEFAULT_MODEL = "openai/gpt-4o-mini"
 AI_GRADER_PROMPT = """
 You are a grader evaluating a free-response answer to the question: **"How does lightning form?"**
 
-Use the following **5-point rubric**. Each item is worth 1 point:
+Use the following **rubric** to provide feedback on the free-response answer.
 
-(1) Warm air rises and initiates cloud formation:
     - Cool air is heated
     - Warm air rises
     - Water vapor condenses and clouds form
 
-(2) Cloud grows and precipitation processes begin:
     - Cloud extends beyond the freezing level
     - Ice crystals form
     - Water droplets and/or crystals fall
     - Updrafts and downdrafts occur
     - People may feel gusts of cool wind before the rain
 
-(3) Electrical charge separation develops in the cloud:
     - Electrical charges build up
     - Negative charges move to the bottom of the cloud and/or positive charges move to the top
 
-(4) A stepped leader forms and moves toward the ground:
     - A (stepped) leader forms
     - It travels downward in steps toward the ground
     - Leaders meet close to the ground (around 165 feet above the ground)
 
-(5) Charge movement produces lightning:
     - Negative charges rush down
     - Positive charges rush up
     - This movement produces the visible lightning flash
-    
-Grading rules:
-
-- Award 1 point for a rubric item if the response clearly addresses the main idea of that item, even if minor details are missing.
-- Award 0 points if the response does NOT address the main idea of that item.
-- For each point that is NOT awarded, you must give a brief, 1-sentence explanation of what the response failed to include or explain.
-- For each point that IS awarded, provide a brief, 1-sentence confirmation of what the response did correctly for that item.
-- Base all judgments ONLY on the actual text of the response.
 
 Output format (IMPORTANT):
 
-You MUST respond with ONLY valid JSON (no backticks, no extra text, no explanations). Use this exact structure:
-
-{
-  "points": [
-    {
-      "id": 1,
-      "awarded": true or false,
-      "reason": "<one short sentence explaining why the point was or was not awarded>"
-    },
-    {
-      "id": 2,
-      "awarded": true or false,
-      "reason": "<one short sentence explaining why the point was or was not awarded>"
-    },
-    {
-      "id": 3,
-      "awarded": true or false,
-      "reason": "<one short sentence explaining why the point was or was not awarded>"
-    },
-    {
-      "id": 4,
-      "awarded": true or false,
-      "reason": "<one short sentence explaining why the point was or was not awarded>"
-    },
-    {
-      "id": 5,
-      "awarded": true or false,
-      "reason": "<one short sentence explaining why the point was or was not awarded>"
-    }
-  ]
-}
-
-Rules for JSON:
-- Do NOT include any keys other than "total_score" and "points".
-- "total_score" must equal the number of points with "awarded": true.
-- "reason" must be a single sentence, without line breaks.
+    - Only output feedback without extra explantions.
 
 Response to grade:
 
@@ -91,14 +43,9 @@ Response to grade:
 """
 
 HOLISTIC_FEEDBACK_PROMPT = """
-You are revising multiple short feedback comments into one cohesive feedback message for a student's answer to the question: "How does lightning form?".
-
-You are given a list of brief comments, each describing what the student did well or what they missed for different rubric points. Your job is to merge them into one flowing piece of feedback.
+You are revising a short feedback comment into one cohesive feedback message for a student's answer to the question: "How does lightning form?".
 
 Requirements:
-- Combine all the information from the comments, preserving both praise and critique.
-- Group related ideas logically instead of listing them point-by-point.
-- Explicitly acknowledge what the student did well overall.
 - Clearly explain the main missing or incorrect ideas.
 - End with 2–4 concise, actionable suggestions for how to improve the answer next time.
 - Do NOT mention rubric item numbers, scores, or the grading process.
@@ -125,6 +72,7 @@ Use a warm, encouraging tone throughout:
     
     "critical": """
 Use a direct, evaluative, and professional tone throughout.
+- Only focus on the points to improve but not on what they did well
 - Explicitly identify problems and omissions (e.g., "This explanation omits...", "This response fails to address...")
 - State inaccuracies plainly (e.g., "This claim is inaccurate", "This oversimplifies the concept", "This explanation is incomplete")
 - Emphasize gaps in reasoning or understanding (e.g., "The key issue here is...", "This lacks sufficient explanation of...")
@@ -249,10 +197,11 @@ class AI_Feedback_Agent:
         if self.points is None:
             self.grade()
 
-        comments = "\n".join(
-            f"Point {p.get('id')}: {'✓ Awarded' if p.get('awarded') else '✗ Not awarded'} - {p.get('reason', '')}"
-            for p in self.points
-        )
+        # comments = "\n".join(
+        #     f"Point {p.get('id')}: {'✓ Awarded' if p.get('awarded') else '✗ Not awarded'} - {p.get('reason', '')}"
+        #     for p in self.points
+        # )
+        comments = self.result_text
         return comments
     
     def _construct_grader_prompt(self):
@@ -261,10 +210,11 @@ class AI_Feedback_Agent:
     def grade(self):
         """Grade the user's answer according to the rubric"""
         prompt = self._construct_grader_prompt()
-        result_text = self._send_request(prompt, temperature=0.0)
-        self.points = self._parse_grade(result_text)
-        return self.points
-    
+        self.result_text = self._send_request(prompt, temperature=0.0)
+        # self.points = self._parse_grade(result_text)
+        # return self.points
+        return 0
+
     def _get_point_by_id(self, point_id):
         if self.points is None:
             self.grade()
@@ -346,9 +296,9 @@ In short, lightning is the result of charge separation, electric field buildup, 
     print("GRADING RESULTS")
     print("=" * 60)
     points = agent.grade()
-    for p in points:
-        status = "✓" if p['awarded'] else "✗"
-        print(f"{status} Point {p['id']}: {p['reason']}")
+    # for p in points:
+    #     status = "✓" if p['awarded'] else "✗"
+    #     print(f"{status} Point {p['id']}: {p['reason']}")
     
     print("\n" + "=" * 60)
     print("GENERATING ALL 4 EXPERIMENTAL CONDITIONS")
@@ -365,3 +315,6 @@ In short, lightning is the result of charge separation, electric field buildup, 
         print(f"{'=' * 60}")
         print(feedback)
         print()
+
+    print("=" * 60)
+    print(all_feedback.result_text)
