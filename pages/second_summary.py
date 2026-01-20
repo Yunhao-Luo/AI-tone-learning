@@ -19,7 +19,7 @@ st.write("*You have up to 4 mins for this section. You may proceed once you are 
 ans_expander = st.expander("### Your first summary:\n")
 ans_expander.write(st.session_state['user_answer'])
 
-ai_feedback_expander = st.expander("### AI peer feedback to your first summary:\n")
+ai_feedback_expander = st.expander("### AI feedback to your first summary:\n")
 ai_feedback_expander.write(st.session_state['AI_feedback'])
 
 # Timer Display

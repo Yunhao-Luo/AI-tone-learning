@@ -104,6 +104,7 @@ Provide detailed mechanistic explanations:
 - When identifying gaps, explain what mechanism is missing and what it should include
 - Provide enough detail that the student understands the physical processes
 - Target SPECIFIC gaps in the learner's explanation with mechanistic detail
+- Do not use bullet points and only use complete paragraphs
 """,
     
     "oversimplified": """
@@ -128,6 +129,7 @@ Provide simplified, surface-level feedback:
 
 - Keep it concise and accessible
 - When suggesting improvements, keep them general rather than mechanistically specific
+- Do not use bullet points and only use complete paragraphs
 """
 }
 
@@ -317,4 +319,4 @@ In short, lightning is the result of charge separation, electric field buildup, 
         print()
 
     print("=" * 60)
-    print(all_feedback.result_text)
+    print(agent.result_text)

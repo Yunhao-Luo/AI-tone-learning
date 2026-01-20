@@ -41,37 +41,44 @@ if "AI_feedback" not in st.session_state:
 
 colA, colB = st.columns(2)
 
-st.subheader("AI peer feedback for your summary")
+st.subheader("AI feedback for your summary")
 st.write(st.session_state["AI_feedback"])
 
 if "AI_feedback" in st.session_state:
     st.markdown("---")
 
     valid = st.select_slider(
-        "**Do you think the AI peer feedback is valid?**",
+        "**Do you think the AI feedback is valid?**",
         options=range(1, 8),
         key="valid_feedback"
     )
     likert_labels(left="Not at all", right="A lot")
 
     style = st.select_slider(
-        "**Is the style of the AI peer feedback appropriate?**",
+        "**Is the style of the AI feedback appropriate?**",
         options=range(1, 8),
         key="style_feedback"
     )
     likert_labels()
 
     confidence = st.select_slider(
-        "**After reading the AI peer feedback, do you feel more confident about your understanding?**",
+        "**After reading the AI feedback, do you feel more confident about your understanding?**",
         options=range(1, 8),
         key="confidence_feedback"
     )
     likert_labels()
     
     motivation = st.select_slider(
-        "**How motivated are you to learn with this AI peer?**",
+        "**How motivated are you to learn with this AI?**",
         options=range(1, 8),
         key="motivation_feedback"
+    )
+    likert_labels()
+
+    motivation_topic = st.select_slider(
+        "**How motivated are you to learn more about how lighting forms?**",
+        options=range(1, 8),
+        key="motivation_topic_feedback"
     )
     likert_labels()
 

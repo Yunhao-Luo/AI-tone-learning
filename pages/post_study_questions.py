@@ -1,10 +1,28 @@
 import streamlit as st
 from ui_utils import *
 
+hide_sidebar(set_wide=False)
+
 # Cognitive Effort
 # Trust toward AI
 # Perception of AI
 # Confidence aobut learning
+
+quiz_performance = st.select_slider(
+    "**How well do you think you did on the quiz just now?**",
+    options=range(1, 8),
+    key="quiz_performance"
+)
+likert_labels(left="Very Poorly", right="Very Well")
+
+
+rewatch = st.radio(
+    "**Do you think watching the video again after the AI feedback and before the quiz would have been helpful?**",
+    options=['Yes', 'No'],
+    key="rewatch"
+)
+
+st.divider()
 
 rely = st.select_slider(
     "**I relied on the AI feedback rather than generating my own revisions.**",
@@ -28,7 +46,7 @@ depend = st.select_slider(
 likert_labels(left="Not at all", right="A lot")
 
 improve = st.select_slider(
-    "**The AI peer feedback helped me improve my explanation.**",
+    "**The AI feedback helped me improve my explanation.**",
     options=range(1, 8),
     key="improve"
 )
@@ -36,7 +54,7 @@ likert_labels(left="Not at all", right="A lot")
 
 
 clarity = st.select_slider(
-    "**The AI peer feedback made it clear what I should change.**",
+    "**The AI feedback made it clear what I should change.**",
     options=range(1, 8),
     key="clarity"
 )
@@ -44,7 +62,7 @@ likert_labels(left="Not at all", right="A lot")
 
 
 reflect = st.select_slider(
-    "**The AI peer feedback made me reflect on gaps in my understanding.**",
+    "**The AI feedback made me reflect on gaps in my understanding.**",
     options=range(1, 8),
     key="reflect"
 )
@@ -60,7 +78,7 @@ likert_labels(left="Not at all", right="A lot")
 
 
 critical = st.select_slider(
-    "**The AI peer feedback felt overly critical.**",
+    "**The AI feedback felt overly critical.**",
     options=range(1, 8),
     key="critical"
 )
@@ -68,7 +86,7 @@ likert_labels(left="Not at all", right="A lot")
 
 
 trust = st.select_slider(
-    "**I would trust this AI peer to give me feedback on other science topics.**",
+    "**I would trust this AI to give me feedback on other science topics.**",
     options=range(1, 8),
     key="trust"
 )
@@ -76,7 +94,7 @@ likert_labels(left="Not at all", right="A lot")
 
 
 prefer = st.select_slider(
-    "**If I had access to this AI peer, I would prefer using it over asking a classmate for feedback.**",
+    "**If I had access to this AI, I would prefer using it over asking a classmate for feedback.**",
     options=range(1, 8),
     key="prefer"
 )
@@ -89,6 +107,26 @@ confidence = st.select_slider(
     key="confidence"
 )
 likert_labels(left="Not at all", right="A lot")
+
+st.divider()
+
+need_to_learn = st.select_slider(
+    "**After receiving AI feedback, I wanted to explore the topic further.**",
+    options=range(1, 8),
+    key="need_to_learn"
+)
+
+curiosity = st.select_slider(
+    "**After receiving AI feedback, I wanted to explore the topic further.**",
+    options=range(1, 8),
+    key="curiosity"
+)
+
+st.divider()
+
+ai_roles = st.text_input(
+    "**What role did you believe this AI was fulfilling in your learning process? e.g., tutor, teacher, peer, a tool.**"
+)
 
 ai_learning_tools = st.text_input(
     "**Do you use any AI tools for learning? If so, what are they?**"
@@ -103,11 +141,13 @@ improvements = st.text_input(
 )
 
 other_feedback = st.text_input(
-    "**Do you have anything else about the study that you want to share with us?**"
+    "**Do you have anything else about your learning experience that you want to share with us?**"
 )
 
 if st.button("Submit"):
     st.session_state['post_feedback'] = {
+        'quiz_performance': quiz_performance,
+        'rewatch': rewatch,
         'improve': improve,
         'clarity': clarity,
         'reflect': reflect,
@@ -118,6 +158,8 @@ if st.button("Submit"):
         'confidence': confidence,
         'ai_learning_tools': ai_learning_tools,
         'feedback_format': feedback_format,
+        'need_to_learn': need_to_learn,
+        'curiosity': curiosity,
         'improvements': improvements,
         'rely': rely,
         'confidencewoai': confidencewoai,
