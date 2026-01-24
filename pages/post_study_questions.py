@@ -111,7 +111,7 @@ likert_labels(left="Not at all", right="A lot")
 st.divider()
 
 need_to_learn = st.select_slider(
-    "**After receiving AI feedback, I wanted to explore the topic further.**",
+    "**How much do you still need to learn to fully understand how lightning forms?**",
     options=range(1, 8),
     key="need_to_learn"
 )
