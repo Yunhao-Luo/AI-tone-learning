@@ -12,8 +12,20 @@ if 'ttest1_time' not in st.session_state:
     st.session_state['ttest1_time'] = 0
 if 'time_up' not in st.session_state:
     st.session_state['time_up'] = False
+if 'show_answer' not in st.session_state:
+    st.session_state['show_answer'] = False
+if 'countdown' not in st.session_state:
+    st.session_state['countdown'] = 5
+if 'choice_made' not in st.session_state:
+    st.session_state['choice_made'] = False
 
 TIME_LIMIT = 120
+
+# Sample answer - replace with your actual answer
+ANSWER = """Lightning intensity can be decreased by reducing the charge separation in clouds. Some methods include:
+- Cloud seeding to alter cloud electrical properties
+- Reducing atmospheric moisture and temperature differences
+- Installing lightning rods to provide easier discharge paths"""
 
 # Timer Display
 minutes_left = (TIME_LIMIT - st.session_state['ttest1_time']) // 60
@@ -38,13 +50,63 @@ if st.session_state['time_up']:
     
     time_up_dialog()
 else:
-    submit = st.button(
-        label="Submit"
-    )
+    # Show choice dialog after submission (before revealing answer)
+    if st.session_state['show_answer'] and not st.session_state['choice_made']:
+        @st.dialog("What would you like to do?", dismissible=False)
+        def choice_dialog():
+            st.write("Choose one of the following options:")
+            
+            col1, col2 = st.columns(2)
+            
+            with col1:
+                if st.button("⏳ Wait 5s to see answer", use_container_width=True, type="primary"):
+                    st.session_state['choice_made'] = True
+                    st.session_state['countdown'] = 5
+                    st.rerun()
+            
+            with col2:
+                if st.button("➡️ Proceed directly", use_container_width=True, type="secondary"):
+                    st.session_state['show_answer'] = False
+                    st.session_state['choice_made'] = False
+                    st.switch_page("pages/transfer_test2.py")
+        
+        choice_dialog()
     
-    if submit:
-        st.session_state['ttest_1_ans'] = q1
-        st.switch_page("pages/transfer_test2.py")
+    # Show countdown and then answer if user chose to wait
+    elif st.session_state['show_answer'] and st.session_state['choice_made']:
+        @st.dialog("Answer Review", dismissible=False)
+        def answer_dialog():
+            if st.session_state['countdown'] > 0:
+                st.info(f"✨ Answer will be revealed in {st.session_state['countdown']} seconds...")
+            else:
+                st.success("✅ Correct Answer:")
+                st.write(ANSWER)
+                st.divider()
+                st.info("**Your Answer:**")
+                st.write(st.session_state.get('ttest_1_ans', ''))
+                
+                if st.button("Proceed to Next Question", use_container_width=True, type="primary"):
+                    st.session_state['show_answer'] = False
+                    st.session_state['choice_made'] = False
+                    st.session_state['countdown'] = 5
+                    st.switch_page("pages/transfer_test2.py")
+        
+        answer_dialog()
+        
+        # Countdown logic
+        if st.session_state['countdown'] > 0:
+            time.sleep(1)
+            st.session_state['countdown'] -= 1
+            st.rerun()
+    else:
+        submit = st.button(
+            label="Submit"
+        )
+        
+        if submit:
+            st.session_state['ttest_1_ans'] = q1
+            st.session_state['show_answer'] = True
+            st.rerun()
 
 # Timer logic
 if st.session_state['ttest1_time'] < TIME_LIMIT and not st.session_state['time_up']:

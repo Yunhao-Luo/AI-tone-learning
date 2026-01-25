@@ -1,7 +1,7 @@
 import streamlit as st
 from ui_utils import *
 
-hide_sidebar(set_wide=False)
+# hide_sidebar(set_wide=False)
 
 st.title("Welcome to AI Learning Study")
 

@@ -106,7 +106,6 @@ confidence = st.select_slider(
     options=range(1, 8),
     key="confidence"
 )
-likert_labels(left="Not at all", right="A lot")
 
 st.divider()
 
@@ -123,6 +122,11 @@ curiosity = st.select_slider(
 )
 
 st.divider()
+
+answer_decision = st.text_area(
+    "**When deciding whether to see the answers during the quiz, what influenced your decision?**",
+    key="answer_decision"
+)
 
 ai_roles = st.text_input(
     "**What role did you believe this AI was fulfilling in your learning process? e.g., tutor, teacher, peer, a tool.**"
@@ -164,6 +168,7 @@ if st.button("Submit"):
         'rely': rely,
         'confidencewoai': confidencewoai,
         'depend': depend,
+        'answer_decision': answer_decision,
         'other_feedback': other_feedback,
     }
     
