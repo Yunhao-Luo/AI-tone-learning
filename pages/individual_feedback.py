@@ -52,35 +52,35 @@ if "AI_feedback" in st.session_state:
         options=range(1, 8),
         key="valid_feedback"
     )
-    likert_labels(left="Not at all", right="A lot")
+    likert_labels(left="Not at all valid", right="Extremely valid")
 
     style = st.select_slider(
         "**Is the style of the AI feedback appropriate?**",
         options=range(1, 8),
         key="style_feedback"
     )
-    likert_labels()
+    likert_labels(left="Not at all appripriate", right="Extremely appropriate")
 
     confidence = st.select_slider(
         "**After reading the AI feedback, do you feel more confident about your understanding?**",
         options=range(1, 8),
         key="confidence_feedback"
     )
-    likert_labels()
+    likert_labels(left="Not at all confident", right="Extremely confident")
     
     motivation = st.select_slider(
         "**How motivated are you to learn with this AI?**",
         options=range(1, 8),
         key="motivation_feedback"
     )
-    likert_labels()
+    likert_labels(left="Not at all motivated", right="Extremely motivated")
 
     motivation_topic = st.select_slider(
         "**How motivated are you to learn more about how lighting forms?**",
         options=range(1, 8),
         key="motivation_topic_feedback"
     )
-    likert_labels()
+    likert_labels(left="Not at all motivated", right="Extremely motivated")
 
     # SAM
     st.divider()

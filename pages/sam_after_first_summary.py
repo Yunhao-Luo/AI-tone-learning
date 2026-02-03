@@ -35,6 +35,20 @@ sam_open = st.text_input(
     "**Could you explain why you selected the options above?**"
 )
 
+summary_confidence = st.select_slider(
+    "**How confidence are you that you performed well in your summary?**",
+    options=range(1, 8),
+    key="quiz_performance"
+)
+likert_labels(left="Not at all", right="Very much")
+
+summary_curiosity = st.select_slider(
+    "**How curious are you to find out the answer to how lightning forms?**",
+    options=range(1, 8),
+    key="summary_curiosity"
+)
+likert_labels(left="Not at all", right="Very much")
+
 if st.button("Submit"):
 
     st.session_state['sam2_ans'] = {
@@ -42,5 +56,7 @@ if st.button("Submit"):
         'excitement': sam2,
         'confidence': sam3,
         'open': sam_open,
+        "summary_confidence": summary_confidence,
+        "summary_curiosity": summary_curiosity
     }
     st.switch_page("pages/individual_feedback.py")

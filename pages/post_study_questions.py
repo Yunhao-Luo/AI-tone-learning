@@ -3,62 +3,153 @@ from ui_utils import *
 
 hide_sidebar(set_wide=False)
 
-# Cognitive Effort
 # Trust toward AI
+# - I would trust this AI to help me learn other science topics. (add)
+
+# Cognitive Effort
+# - I put in a lot of effort to understand the AI's feedback. (add)
+# - The AI communicated ideas in a clear and understandable way. (add)
+# - I found myself mentally working hard to follow the AI's reasoning. (add)
+
 # Perception of AI
+# - The AI was likable.
+# - The AI was competent.
+# - The feedback felt supportive.
+
+# Usefulness of AI
+# - The AI feedback helped me improve my explanation.
+# - The AI feedback made it clear what I should change.
+# - The AI feedback made me reflect on gaps in my understanding.
+# - The AI feedback I received facilitated my learning. (add)
+# - I would use this AI to learn more advanced science topics. (add)
+
+# Dependence on AI
+# - I relied on the AI feedback rather than generating my own revisions.
+# - I could explain how lightning forms without looking back at the AI feedback.
+# - The feedback told me what to write more than it helped me understand why.
+
 # Confidence aobut learning
+# - How well do you think you did on the quiz just now?
+# - I feel confident that I now understand how lightning forms.
+# - How much do you still need to learn to fully understand how lightning forms?
 
-quiz_performance = st.select_slider(
-    "**How well do you think you did on the quiz just now?**",
-    options=range(1, 8),
-    key="quiz_performance"
+############### SAM
+st.divider()
+st.write("Please rate your current feelings by placing selecting the number on the scale that best represents your experience. You can select a number under any figure or a number between figures")
+st.write("Happiness")
+st.image('SAM1.jpg')
+sam1 = st.select_slider(
+    label="1",
+    options=range(1, 10),
+    key="sam1_1",
+    label_visibility="hidden"
 )
-likert_labels(left="Very Poorly", right="Very Well")
+st.write("Excitement")
+st.image('SAM2.jpg')
+sam2 = st.select_slider(
+    label="2",
+    options=range(1, 10),
+    key="sam2_1",
+    label_visibility="hidden"
+)
+st.write("Confidence")
+st.image('SAM3.jpg')
+sam3 = st.select_slider(
+    label="3",
+    options=range(1, 10),
+    key="sam3_1",
+    label_visibility="hidden"
+)
 
-
-rewatch = st.radio(
-    "**Do you think watching the video again after the AI feedback and before the quiz would have been helpful?**",
-    options=['Yes', 'No'],
-    key="rewatch"
+sam_open = st.text_input(
+    "**Could you explain why you selected the options above?**"
 )
 
 st.divider()
 
-rely = st.select_slider(
-    "**I relied on the AI feedback rather than generating my own revisions.**",
+############### Likert
+trust = st.select_slider(
+    "**I would trust this AI to help me learn other science topics.**",
     options=range(1, 8),
-    key="rely"
+    key="trust"
 )
-likert_labels(left="Not at all", right="A lot")
+likert_labels()
 
-confidencewoai = st.select_slider(
-    "**I could explain how lightning forms without looking back at the AI feedback.**",
-    options=range(1, 8),
-    key="confidencewoai"
-)
-likert_labels(left="Not at all", right="A lot")
+##############
 
-depend = st.select_slider(
-    "**The feedback told me what to write more than it helped me understand why.**",
+effort_to_understand = st.select_slider(
+    "**I put in a lot of effort to understand the AI's feedback.**",
     options=range(1, 8),
-    key="depend"
+    key="effort_to_understand"
 )
-likert_labels(left="Not at all", right="A lot")
+likert_labels()
+
+clear_to_understand = st.select_slider(
+    "**The AI communicated ideas in a clear and understandable way.**",
+    options=range(1, 8),
+    key="clear_to_understand"
+)
+likert_labels()
+
+mental_hard = st.select_slider(
+    "**I found myself mentally working hard to follow the AI's reasoning.**",
+    options=range(1, 8),
+    key="mental_hard"
+)
+likert_labels()
+
+##############
+
+likable = st.select_slider(
+    "**The AI was likable.**",
+    options=range(1, 8),
+    key="likable"
+)
+likert_labels()
+
+competent = st.select_slider(
+    "**The AI was competent.**",
+    options=range(1, 8),
+    key="competent"
+)
+likert_labels()
+
+supportive = st.select_slider(
+    "**The feedback felt supportive.**",
+    options=range(1, 8),
+    key="supportive"
+)
+likert_labels()
+
+critical = st.select_slider(
+    "**The AI feedback felt overly critical.**",
+    options=range(1, 8),
+    key="critical"
+)
+likert_labels()
+
+##############
+attention1 = st.select_slider(
+    "**Please select disagree strongly. This is an attention check question.**",
+    options=range(1, 8),
+    key="attention1"
+)
+likert_labels()
+##############
 
 improve = st.select_slider(
     "**The AI feedback helped me improve my explanation.**",
     options=range(1, 8),
     key="improve"
 )
-likert_labels(left="Not at all", right="A lot")
-
+likert_labels()
 
 clarity = st.select_slider(
     "**The AI feedback made it clear what I should change.**",
     options=range(1, 8),
     key="clarity"
 )
-likert_labels(left="Not at all", right="A lot")
+likert_labels()
 
 
 reflect = st.select_slider(
@@ -66,67 +157,71 @@ reflect = st.select_slider(
     options=range(1, 8),
     key="reflect"
 )
-likert_labels(left="Not at all", right="A lot")
+likert_labels()
 
-
-supportive = st.select_slider(
-    "**The feedback felt supportive.**",
+facilitated = st.select_slider(
+    "**The AI feedback I received facilitated my learning.**",
     options=range(1, 8),
-    key="supportive"
+    key="facilitated"
 )
-likert_labels(left="Not at all", right="A lot")
+likert_labels()
 
-
-critical = st.select_slider(
-    "**The AI feedback felt overly critical.**",
+learn_advanced = st.select_slider(
+    "**I would use this AI to learn more advanced science topics.**",
     options=range(1, 8),
-    key="critical"
+    key="learn_advanced"
 )
-likert_labels(left="Not at all", right="A lot")
+likert_labels()
 
+##############
 
-trust = st.select_slider(
-    "**I would trust this AI to give me feedback on other science topics.**",
+rely = st.select_slider(
+    "**I relied on the AI feedback rather than generating my own revisions.**",
     options=range(1, 8),
-    key="trust"
+    key="rely"
 )
-likert_labels(left="Not at all", right="A lot")
+likert_labels()
 
-
-prefer = st.select_slider(
-    "**If I had access to this AI, I would prefer using it over asking a classmate for feedback.**",
+confidencewoai = st.select_slider(
+    "**I could explain how lightning forms without looking back at the AI feedback.**",
     options=range(1, 8),
-    key="prefer"
+    key="confidencewoai"
 )
-likert_labels(left="Not at all", right="A lot")
+likert_labels()
 
+depend = st.select_slider(
+    "**The feedback told me what to write more than it helped me understand why.**",
+    options=range(1, 8),
+    key="depend"
+)
+likert_labels()
+
+##############
+
+quiz_performance = st.select_slider(
+    "**How well do you think you did on the quiz just now?**",
+    options=range(1, 8),
+    key="quiz_performance"
+)
+likert_labels(left="Very poorly", right="Very well")
 
 confidence = st.select_slider(
     "**I feel confident that I now understand how lightning forms.**",
     options=range(1, 8),
     key="confidence"
 )
-
-st.divider()
+likert_labels()
 
 need_to_learn = st.select_slider(
     "**How much do you still need to learn to fully understand how lightning forms?**",
     options=range(1, 8),
     key="need_to_learn"
 )
+likert_labels(left="Nothing", right="A lot")
 
-curiosity = st.select_slider(
-    "**After receiving AI feedback, I wanted to explore the topic further.**",
-    options=range(1, 8),
-    key="curiosity"
-)
+##############
 
 st.divider()
-
-answer_decision = st.text_area(
-    "**When deciding whether to see the answers during the quiz, what influenced your decision?**",
-    key="answer_decision"
-)
 
 ai_roles = st.text_input(
     "**What role did you believe this AI was fulfilling in your learning process? e.g., tutor, teacher, peer, a tool.**"
@@ -151,24 +246,22 @@ other_feedback = st.text_input(
 if st.button("Submit"):
     st.session_state['post_feedback'] = {
         'quiz_performance': quiz_performance,
-        'rewatch': rewatch,
         'improve': improve,
         'clarity': clarity,
         'reflect': reflect,
+        'likable': likable,
+        'competent': competent,
         'supportive': supportive,
         'critical': critical,
         'trust': trust,
-        'prefer': prefer,
         'confidence': confidence,
         'ai_learning_tools': ai_learning_tools,
         'feedback_format': feedback_format,
         'need_to_learn': need_to_learn,
-        'curiosity': curiosity,
         'improvements': improvements,
         'rely': rely,
         'confidencewoai': confidencewoai,
         'depend': depend,
-        'answer_decision': answer_decision,
         'other_feedback': other_feedback,
     }
     

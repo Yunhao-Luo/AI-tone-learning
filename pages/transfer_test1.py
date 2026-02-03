@@ -54,14 +54,14 @@ else:
     if st.session_state['show_answer'] and not st.session_state['choice_made']:
         @st.dialog("What would you like to do?", dismissible=False)
         def choice_dialog():
-            st.write("Choose one of the following options:")
+            st.write("You can choose to see the correct answer or proceed to the next question. To see the correct answer, you will need to wait for a random amount of time between 5 and 25 seconds.")
             
             col1, col2 = st.columns(2)
             
             with col1:
-                if st.button("⏳ Wait 5s to see answer", use_container_width=True, type="primary"):
+                if st.button("⏳ Wait to see answer", use_container_width=True, type="primary"):
                     st.session_state['choice_made'] = True
-                    st.session_state['countdown'] = 5
+                    st.session_state['countdown'] = 18
                     st.rerun()
             
             with col2:
@@ -88,7 +88,7 @@ else:
                 if st.button("Proceed to Next Question", use_container_width=True, type="primary"):
                     st.session_state['show_answer'] = False
                     st.session_state['choice_made'] = False
-                    st.session_state['countdown'] = 5
+                    st.session_state['countdown'] = 18
                     st.switch_page("pages/transfer_test2.py")
         
         answer_dialog()
