@@ -1,7 +1,7 @@
 import streamlit as st
 from ui_utils import *
 
-# hide_sidebar(set_wide=False)
+hide_sidebar(set_wide=False)
 
 st.title("Welcome to AI Learning Study")
 
@@ -223,7 +223,7 @@ neurodivergent = st.radio(
 
 # SAM
 st.divider()
-st.write("Please rate your current feelings by placing selecting the number on the scale that best represents your experience. You can select a number under any figure or a number between figures")
+st.write("Please rate your current feelings by selecting the number on the scale that best represents your experience. You can select a number under any figure or a number between figures")
 st.write("Happiness")
 st.image('SAM1.jpg')
 sam1 = st.select_slider(

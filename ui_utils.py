@@ -31,6 +31,19 @@ def hide_status_bar():
         </style>
     """, unsafe_allow_html=True)
 
+def larger_chat_font():
+    st.markdown(
+        """
+        <style>
+        div[data-testid="stChatMessageContent"] .stMarkdown p {
+            font-size: 24px !important;
+            line-height: 1.8 !important;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+        )
+
 def get_feedback_in_two_tones(user_ans, feedback_num, tone_1, tone_2):
     grader = feedback_agent.AI_Feedback_Agent(user_answer=user_ans, api_key=st.secrets['openrouter']['api_key'])
     resA = grader.feedback_for_point_in_tone(tone_1, feedback_num)

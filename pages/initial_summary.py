@@ -14,7 +14,7 @@ if 'time_up' not in st.session_state:
 TIME_LIMIT = 240
 
 st.title("Please explain how lightning works in your own words.")
-st.write("*You have up to 4 mins for this section. You may proceed once you are finished. Please click the submit button before the time is up. *")
+st.write("*You have up to 4 mins for this section. You may proceed once you are finished. Please click the submit button before the time is up.*")
 
 # Timer Display
 minutes_left = (TIME_LIMIT - st.session_state['initial_summary_time']) // 60
