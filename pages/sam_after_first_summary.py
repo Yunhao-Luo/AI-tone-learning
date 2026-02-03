@@ -59,4 +59,4 @@ if st.button("Submit"):
         "summary_confidence": summary_confidence,
         "summary_curiosity": summary_curiosity
     }
-    st.switch_page("pages/individual_feedback.py")
+    st.switch_page("pages/feedback.py")
