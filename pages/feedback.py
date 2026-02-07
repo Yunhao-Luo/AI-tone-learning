@@ -6,7 +6,7 @@ import time
 from ui_utils import *
 
 hide_sidebar(set_wide=False)
-larger_chat_font()
+chatgpt_like_chat_style()
 
 TIME_LIMIT = 180
 
@@ -15,7 +15,7 @@ TIME_LIMIT = 180
 # 3: critical; mechanistic
 # 4: critical; oversimplified
 
-CURRENT_CONDITION = 3
+CURRENT_CONDITION = 1
 
 CONDITION_MAPPING = {
     1: ["supportive", "mechanistic"],

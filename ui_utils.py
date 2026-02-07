@@ -139,3 +139,59 @@ def upload_file_to_dropbox(file_path, dropbox_path):
             dbx.files_upload(f.read(), dropbox_path, mode=dropbox.files.WriteMode.overwrite)
     except Exception as e:
         print("Error during file upload:", e)
+
+
+def chatgpt_like_chat_style():
+    st.markdown(
+        """
+        <style>
+
+        /* Slightly smaller text than Streamlit default */
+        .stMarkdown p {
+            font-size: 0.96rem;
+            line-height: 1.55;
+
+            /* KEY: restore paragraph spacing */
+            margin-top: 0.6rem;
+            margin-bottom: 0.6rem;
+        }
+
+        /* First paragraph in a message shouldn't have top gap */
+        .stMarkdown p:first-child {
+            margin-top: 0.1rem;
+        }
+
+        /* Lists spacing similar to ChatGPT */
+        .stMarkdown ul, .stMarkdown ol {
+            margin-top: 0.4rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .stMarkdown li {
+            margin-bottom: 0.25rem;
+            line-height: 1.5;
+        }
+
+        /* Chat message container padding */
+        [data-testid="stChatMessage"] {
+            padding-top: 0.35rem;
+            padding-bottom: 0.35rem;
+        }
+
+        /* Message bubble content spacing */
+        [data-testid="stChatMessageContent"] {
+            padding: 0.4rem 0.6rem;
+        }
+
+        /* Code blocks readable but compact */
+        .stMarkdown pre {
+            font-size: 0.9rem;
+            line-height: 1.45;
+            padding: 0.65rem;
+            margin: 0.5rem 0;
+        }
+
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
