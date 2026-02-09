@@ -21,11 +21,11 @@ DEPTH = CONDITION_MAPPING[CURRENT_CONDITION][1]
 
 hide_sidebar()
 
-ans_expander = st.expander("### Your answer:\n")
-ans_expander.write(st.session_state['user_answer'])
+# ans_expander = st.expander("### Your answer:\n")
+# ans_expander.write(st.session_state['user_answer'])
 
-feedback_expander = st.expander("### AI feedback for your summary:\n")
-feedback_expander.write(st.session_state['AI_feedback'])
+# feedback_expander = st.expander("### AI feedback for your summary:\n")
+# feedback_expander.write(st.session_state['AI_feedback'])
 
 st.divider()
 

@@ -15,7 +15,7 @@ TIME_LIMIT = 180
 # 3: critical; mechanistic
 # 4: critical; oversimplified
 
-CURRENT_CONDITION = 1
+CURRENT_CONDITION = 4
 
 CONDITION_MAPPING = {
     1: ["supportive", "mechanistic"],
@@ -31,7 +31,7 @@ STUDENT_RESPONSE = st.session_state['user_answer']
 
 TONE_INSTRUCTIONS = {
     "supportive": """
-Use a warm, encouraging tone throughout:
+Use a warm, encouraging, promoting growth tone throughout:
 - Begin by acknowledging strengths: "Great start...", "You've clearly understood...", "I can see you grasp..."
 - Frame gaps as opportunities: "You can make it even better by...", "To strengthen your answer, consider..."
 - Use encouraging language: "Nice work on...", "You're on the right track with..."
@@ -40,17 +40,35 @@ Use a warm, encouraging tone throughout:
 - Make the student feel capable and motivated to improve
 """,
     
+#     "critical": """
+# Use a direct, evaluative, and professional tone throughout. Direct error identification
+# - Only focus on the points to improve but not on what they did well
+# - Explicitly identify problems and omissions (e.g., "This explanation omits...", "This response fails to address...")
+# - State inaccuracies plainly (e.g., "This claim is inaccurate", "This oversimplifies the concept", "This explanation is incomplete")
+# - Emphasize gaps in reasoning or understanding (e.g., "The key issue here is...", "This lacks sufficient explanation of...")
+# - Avoid any encouragement, praise, or reassurance (do not use phrases like "good job", "nice start", or "you are on the right track")
+# - Maintain a neutral, impersonal stance focused on the work, not the person
+# - Be firm and matter-of-fact rather than supportive or conversational
+# - Do not soften critiques with emotional language
+# - Maintain professionalism and respect; avoid insults, judgments of ability, or personal remarks
+# """
+
     "critical": """
-Use a direct, evaluative, and professional tone throughout.
-- Only focus on the points to improve but not on what they did well
-- Explicitly identify problems and omissions (e.g., "This explanation omits...", "This response fails to address...")
-- State inaccuracies plainly (e.g., "This claim is inaccurate", "This oversimplifies the concept", "This explanation is incomplete")
-- Emphasize gaps in reasoning or understanding (e.g., "The key issue here is...", "This lacks sufficient explanation of...")
-- Avoid any encouragement, praise, or reassurance (do not use phrases like "good job", "nice start", or "you are on the right track")
-- Maintain a neutral, impersonal stance focused on the work, not the person
-- Be firm and matter-of-fact rather than supportive or conversational
-- Do not soften critiques with emotional language
-- Maintain professionalism and respect; avoid insults, judgments of ability, or personal remarks
+Use a strict, evaluative tone like a grading rubric or peer review. Be concise and assertive.
+
+Style rules:
+- Do NOT praise, validate, or acknowledge strengths. Do NOT use “however” to soften critique.
+- Avoid hedging and softeners: do not use “might”, “could”, “somewhat”, “it would help”, “benefit from”, “nice”, “good”.
+- Use direct labels for issues: “Incorrect”, “Incomplete”, “Vague”, “Missing”, “Unjustified”.
+- Use high-certainty language: “This omits…”, “This fails to explain…”, “This is inaccurate because…”.
+- Keep sentences short and matter-of-fact. No conversational warmth.
+
+Content rules:
+- Start with the single biggest problem in the response.
+- Then list the next 3–5 highest-impact omissions/inaccuracies.
+- For each issue: (a) state what is wrong, (b) state what a correct explanation must include (briefly).
+- Focus only on the work, not the person.
+- Maintain professionalism; no insults or judgments of ability.
 """
 }
 
