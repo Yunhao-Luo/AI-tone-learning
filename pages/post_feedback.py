@@ -19,7 +19,7 @@ CONDITION_MAPPING = {
 TONE = CONDITION_MAPPING[CURRENT_CONDITION][0]
 DEPTH = CONDITION_MAPPING[CURRENT_CONDITION][1]
 
-hide_sidebar()
+hide_sidebar(set_wide=False)
 
 # ans_expander = st.expander("### Your answer:\n")
 # ans_expander.write(st.session_state['user_answer'])

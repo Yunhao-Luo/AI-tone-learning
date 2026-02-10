@@ -2,7 +2,7 @@ import streamlit as st
 import time
 from ui_utils import *
 
-hide_sidebar()
+hide_sidebar(set_wide=False)
 
 # What could you do to decrease the intensity of lightning?
 # Suppose you see clouds in the sky, but no lightning. Why not?

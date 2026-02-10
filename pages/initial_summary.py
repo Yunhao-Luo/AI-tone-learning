@@ -3,7 +3,7 @@ import time
 from ui_utils import *
 
 hide_status_bar()
-hide_sidebar()
+hide_sidebar(set_wide=False)
 
 ########## session states ##########
 if 'initial_summary_time' not in st.session_state:
