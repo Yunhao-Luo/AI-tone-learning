@@ -43,6 +43,32 @@ def larger_chat_font():
         """,
         unsafe_allow_html=True
         )
+    
+def narrow_chat_container(width_px=760):
+    st.markdown(
+        f"""
+        <style>
+        /* Center the main block and limit width */
+        .block-container {{
+            max-width: {width_px}px;
+            padding-top: 2rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            margin-left: auto;
+            margin-right: auto;
+        }}
+
+        /* Make chat input follow same width */
+        section[data-testid="stChatInput"] {{
+            max-width: {width_px}px;
+            margin-left: auto;
+            margin-right: auto;
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
 
 def get_feedback_in_two_tones(user_ans, feedback_num, tone_1, tone_2):
     grader = feedback_agent.AI_Feedback_Agent(user_answer=user_ans, api_key=st.secrets['openrouter']['api_key'])

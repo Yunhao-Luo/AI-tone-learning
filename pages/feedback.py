@@ -7,6 +7,8 @@ from ui_utils import *
 
 hide_sidebar(set_wide=False)
 chatgpt_like_chat_style()
+narrow_chat_container(760)
+ 
 
 TIME_LIMIT = 180
 

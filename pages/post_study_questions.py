@@ -5,16 +5,18 @@ hide_sidebar(set_wide=False)
 
 # Trust toward AI
 # - I would trust this AI to help me learn other science topics. (add)
+# - I believed the AI’s explanation was scientifically correct (?)
 
 # Cognitive Effort
 # - I put in a lot of effort to understand the AI's feedback. (add)
 # - The AI communicated ideas in a clear and understandable way. (add)
 # - I found myself mentally working hard to follow the AI's reasoning. (add)
 
-# Perception of AI
+# Perception of AI 
 # - The AI was likable.
 # - The AI was competent.
 # - The feedback felt supportive.
+# - The AI feedback made me feel encouraged to keep learning (?)
 
 # Usefulness of AI
 # - The AI feedback helped me improve my explanation.
@@ -32,6 +34,7 @@ hide_sidebar(set_wide=False)
 # - How well do you think you did on the quiz just now?
 # - I feel confident that I now understand how lightning forms.
 # - How much do you still need to learn to fully understand how lightning forms?
+
 
 ############### SAM
 st.divider()
