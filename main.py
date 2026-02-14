@@ -1,7 +1,7 @@
 import streamlit as st
 from ui_utils import *
 
-hide_sidebar(set_wide=False)
+# hide_sidebar(set_wide=False)
 
 st.title("Welcome to the AI Learning Study")
 
@@ -25,8 +25,6 @@ The entire study takes approximately 15–20 minutes to complete.
 """
 
 st.write(intro)
-
-
 
 prolific_id = st.text_input("**Prolific ID:**")
 education = st.radio(

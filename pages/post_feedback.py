@@ -21,12 +21,6 @@ DEPTH = CONDITION_MAPPING[CURRENT_CONDITION][1]
 
 hide_sidebar(set_wide=False)
 
-# ans_expander = st.expander("### Your answer:\n")
-# ans_expander.write(st.session_state['user_answer'])
-
-# feedback_expander = st.expander("### AI feedback for your summary:\n")
-# feedback_expander.write(st.session_state['AI_feedback'])
-
 st.divider()
 
 valid = st.select_slider(
@@ -93,13 +87,29 @@ sam3 = st.select_slider(
 )
 
 sam_open = st.text_input(
-    "**Could you explain why you selected the options above?**"
+    "**Could you explain why you selected the options above?**",
+    key="sam_open_feedback"
 )
 
-# Submit
+# Submit - SAVE ALL VALUES EXPLICITLY
 if st.button("Submit"):
-    if valid is None:
-        st.warning("Please select an option before continuing.")
+    # Validation
+    if st.session_state.get('valid_feedback') is None:
+        st.warning("Please answer all questions before continuing.")
         st.stop()
+    
+    # IMPORTANT: Explicitly save to a dictionary in session_state
+    # This ensures the data persists across page switches
+    st.session_state['post_feedback_responses'] = {
+        'valid': st.session_state.get('valid_feedback'),
+        'style': st.session_state.get('style_feedback'),
+        'confidence': st.session_state.get('confidence_feedback'),
+        'motivation': st.session_state.get('motivation_feedback'),
+        'motivation_topic': st.session_state.get('motivation_topic_feedback'),
+        'sam1': st.session_state.get('sam1_feedback'),
+        'sam2': st.session_state.get('sam2_feedback'),
+        'sam3': st.session_state.get('sam3_feedback'),
+        'sam_open': st.session_state.get('sam_open_feedback', ''),
+    }
     
     st.switch_page("pages/second_summary.py")

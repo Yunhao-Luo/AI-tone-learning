@@ -34,7 +34,7 @@ if st.session_state['time_up']:
         if st.button("Proceed", use_container_width=True, type="primary"):
             st.session_state['user_answer'] = st.session_state.get('summary_text_key', '')
             st.session_state['time_up'] = False
-            st.switch_page("pages/final_page.py")
+            st.switch_page("pages/post_study_questions.py")
     
     time_up_dialog()
 else:
@@ -44,7 +44,7 @@ else:
     
     if submit:
         st.session_state['ttest_4_ans'] = q4
-        st.switch_page("pages/final_page.py")
+        st.switch_page("pages/post_study_questions.py")
 
 # Timer logic
 if st.session_state['ttest4_time'] < TIME_LIMIT and not st.session_state['time_up']:
