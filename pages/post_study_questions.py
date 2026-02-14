@@ -3,40 +3,53 @@ from ui_utils import *
 
 hide_sidebar(set_wide=False)
 
-# Trust toward AI
-# - I would trust this AI to help me learn other science topics. (add)
-# - I believed the AI’s explanation was scientifically correct (?)
+# Post study measures: (22 items)
 
-# Cognitive Effort
-# - I put in a lot of effort to understand the AI's feedback. (add)
-# - The AI communicated ideas in a clear and understandable way. (add)
-# - I found myself mentally working hard to follow the AI's reasoning. (add)
+# Affective-relational stance with AI (Did I trust/like the AI as a partner)
 
-# Perception of AI 
-# - The AI was likable.
-# - The AI was competent.
-# - The feedback felt supportive.
-# - The AI feedback made me feel encouraged to keep learning (?)
+### Trust
+# I would trust this AI to help me learn other science topics.
+# I believed the AI’s explanation was scientifically correct
 
-# Usefulness of AI
-# - The AI feedback helped me improve my explanation.
-# - The AI feedback made it clear what I should change.
-# - The AI feedback made me reflect on gaps in my understanding.
-# - The AI feedback I received facilitated my learning. (add)
-# - I would use this AI to learn more advanced science topics. (add)
+### Likability
+# The AI was likable.
+# The feedback felt supportive.
+# The AI feedback felt overly critical
+# The AI feedback made me feel encouraged to keep learning
 
-# Dependence on AI
-# - I relied on the AI feedback rather than generating my own revisions.
-# - I could explain how lightning forms without looking back at the AI feedback.
-# - The feedback told me what to write more than it helped me understand why.
+### Competence
+# The AI was competent.
+# The AI was an expert
 
-# Confidence aobut learning
-# - How well do you think you did on the quiz just now?
-# - I feel confident that I now understand how lightning forms.
-# - How much do you still need to learn to fully understand how lightning forms?
+# Cognitive load (How hard was thinking with AI) 
 
+### Cognitive Load
+# I put in a lot of effort to understand the AI's feedback.
+# The AI communicated ideas in a clear and understandable way.
+# I found myself mentally working hard to follow the AI's reasoning. 
 
-############### SAM
+# Learning Outcome (Did AI help me learn)
+
+### Usefulness 
+# The AI feedback helped me improve my explanation.
+# The AI feedback made it clear what I should change.
+# The AI feedback made me reflect on gaps in my understanding.
+# The AI feedback I received facilitated my learning. 
+# I would use this AI to learn more advanced science topics. 
+
+# Metacognition Monitoring (Do I understand my own learning & reliance)
+
+### Confidence
+# How well do you think you did on the quiz just now?
+# I feel confident that I now understand how lightning forms.
+# How much do you still need to learn to fully understand how lightning forms?
+
+### Dependence
+# I relied on the AI feedback rather than generating my own revisions.
+# I could explain how lightning forms without looking back at the AI feedback.
+# The feedback told me what to write more than it helped me understand why.
+
+#SAM
 st.divider()
 st.write("Please rate your current feelings by selecting the number on the scale that best represents your experience. You can select a number under any figure or a number between figures")
 st.write("Happiness")
@@ -70,7 +83,9 @@ sam_open = st.text_input(
 
 st.divider()
 
-############### Likert
+#Likert
+
+# Trust 
 trust = st.select_slider(
     "**I would trust this AI to help me learn other science topics.**",
     options=range(1, 8),
@@ -78,8 +93,14 @@ trust = st.select_slider(
 )
 likert_labels()
 
-##############
+trust_scientifically_correct = st.select_slider(
+    "**I believed the AI’s explanation was scientifically correct.**",
+    options=range(1, 8),
+    key="trust_scientifically_correct"
+)
+likert_labels()
 
+# Cognitive load 
 effort_to_understand = st.select_slider(
     "**I put in a lot of effort to understand the AI's feedback.**",
     options=range(1, 8),
@@ -103,17 +124,11 @@ likert_labels()
 
 ##############
 
+# Likability / perception
 likable = st.select_slider(
     "**The AI was likable.**",
     options=range(1, 8),
     key="likable"
-)
-likert_labels()
-
-competent = st.select_slider(
-    "**The AI was competent.**",
-    options=range(1, 8),
-    key="competent"
 )
 likert_labels()
 
@@ -124,6 +139,27 @@ supportive = st.select_slider(
 )
 likert_labels()
 
+encouraged_to_keep_learning = st.select_slider(
+    "**The AI feedback made me feel encouraged to keep learning.**",
+    options=range(1, 8),
+    key="encouraged_to_keep_learning"
+)
+likert_labels()
+
+competent = st.select_slider(
+    "**The AI was competent.**",
+    options=range(1, 8),
+    key="competent"
+)
+likert_labels()
+
+ai_was_expert = st.select_slider(
+    "**The AI was an expert.**",
+    options=range(1, 8),
+    key="ai_was_expert"
+)
+likert_labels()
+
 critical = st.select_slider(
     "**The AI feedback felt overly critical.**",
     options=range(1, 8),
@@ -131,15 +167,7 @@ critical = st.select_slider(
 )
 likert_labels()
 
-##############
-attention1 = st.select_slider(
-    "**Please select disagree strongly. This is an attention check question.**",
-    options=range(1, 8),
-    key="attention1"
-)
-likert_labels()
-##############
-
+# Usefulness
 improve = st.select_slider(
     "**The AI feedback helped me improve my explanation.**",
     options=range(1, 8),
@@ -153,7 +181,6 @@ clarity = st.select_slider(
     key="clarity"
 )
 likert_labels()
-
 
 reflect = st.select_slider(
     "**The AI feedback made me reflect on gaps in my understanding.**",
@@ -176,8 +203,7 @@ learn_advanced = st.select_slider(
 )
 likert_labels()
 
-##############
-
+# Dependence
 rely = st.select_slider(
     "**I relied on the AI feedback rather than generating my own revisions.**",
     options=range(1, 8),
@@ -199,8 +225,8 @@ depend = st.select_slider(
 )
 likert_labels()
 
-##############
 
+# Confidence 
 quiz_performance = st.select_slider(
     "**How well do you think you did on the quiz just now?**",
     options=range(1, 8),
@@ -222,32 +248,33 @@ need_to_learn = st.select_slider(
 )
 likert_labels(left="Nothing", right="A lot")
 
-##############
-
 st.divider()
 
+# ============================================================
+# Open-ended
+# ============================================================
 ai_roles = st.text_input(
     "**What role did you believe this AI was fulfilling in your learning process? e.g., tutor, teacher, peer, a tool.**"
 )
-
 ai_learning_tools = st.text_input(
     "**Do you use any AI tools for learning? If so, what are they?**"
 )
-
 feedback_format = st.text_input(
     "**Do you like the way AI provides feedback in this study to assist you in learning?**"
 )
-
 improvements = st.text_input(
     "**What other kinds of feedback would be helpful from an AI study peer?**"
 )
-
 other_feedback = st.text_input(
     "**Do you have anything else about your learning experience that you want to share with us?**"
 )
 
+# ============================================================
+# Submit
+# ============================================================
 if st.button("Submit"):
     st.session_state['post_feedback'] = {
+        # Existing fields (unchanged keys)
         'quiz_performance': quiz_performance,
         'improve': improve,
         'clarity': clarity,
@@ -266,6 +293,10 @@ if st.button("Submit"):
         'confidencewoai': confidencewoai,
         'depend': depend,
         'other_feedback': other_feedback,
+        'trust_scientifically_correct': trust_scientifically_correct,
+        'encouraged_to_keep_learning': encouraged_to_keep_learning,
+        'ai_was_expert': ai_was_expert,
+        'ai_roles': ai_roles,
     }
-    
+
     st.switch_page("pages/final_page.py")
