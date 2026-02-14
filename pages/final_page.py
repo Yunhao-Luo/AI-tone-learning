@@ -10,7 +10,6 @@ st.title("Thank you for your participation in the study!")
 try:
     filename = save_all_experiment_data()
     st.success("✅ Your responses have been successfully saved!")
-    st.info(f"📁 Data file: `{filename}`")
     
 except Exception as e:
     st.error("⚠️ There was an error saving your data.")
@@ -41,15 +40,4 @@ st.markdown("""
 **Completion Code:** `TONE2025COMPLETE`  
 *(Update this with your actual Prolific completion code)*
 
-If you encountered any technical issues, please contact: **rose.e.wang@wustl.edu**
 """)
-
-# Optional: Debug view
-with st.expander("🔍 Debug Information (optional)"):
-    st.write("**Data successfully collected for:**")
-    st.write(f"- Prolific ID: `{st.session_state.get('prolific_id', 'NOT SET')}`")
-    st.write(f"- Education: `{st.session_state.get('education', 'NOT SET')}`")
-    st.write(f"- Initial summary: {len(st.session_state.get('user_answer', ''))} characters")
-    st.write(f"- Revised summary: {len(st.session_state.get('user_answer_second', ''))} characters")
-    st.write(f"- Chat messages: {len(st.session_state.get('history', []))} exchanges")
-    st.write(f"- Transfer test answers: {sum([1 for i in range(1,5) if st.session_state.get(f'ttest_{i}_ans')])}/4 completed")
