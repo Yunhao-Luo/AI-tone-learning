@@ -23,7 +23,7 @@ st.write(f"⏱️ Time remaining: {minutes_left}:{seconds_left:02d}")
 
 html_reminder = """
 <div style='background-color: #ff6347; color: #f0f2f6; padding: 10px;'>
-    Please click on Submit before the time is up; otherwise, the study will be invalid.
+    Please submit before the time is up; otherwise, the study will be invalid.
 </div>
 """
 st.markdown(html_reminder, unsafe_allow_html=True)

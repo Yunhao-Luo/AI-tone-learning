@@ -25,7 +25,7 @@ st.write(f"⏱️ Time remaining: {minutes_left}:{seconds_left:02d}")
 
 st.markdown("""
 <div style='background-color:#ff6347; color:#f0f2f6; padding:10px;'>
-Please click Submit before time runs out; otherwise the study will be invalid.
+Please submit before the time is up; otherwise, the study will be invalid.
 </div>
 """, unsafe_allow_html=True)
 
@@ -34,6 +34,7 @@ user_summary = st.text_area(
     label="Rewrite your explanation",
     height=300,
     key="summary_text_key",
+    label_visibility="hidden",
     disabled=st.session_state.time_up
 )
 

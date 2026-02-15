@@ -153,7 +153,11 @@ def make_json_safe(obj):
         return obj
     
 def upload_file_to_dropbox(file_path, dropbox_path):
-    """Upload a file to Dropbox using OAuth2 authentication."""
+    """Upload a file to Dropbox using OAuth2 authentication.
+
+    Returns:
+        dropbox.files.FileMetadata: Metadata for the uploaded file.
+    """
     app_key = st.secrets["dropbox"]["app_key"]
     app_secret = st.secrets["dropbox"]["app_secret"]
     refresh_token = st.secrets["dropbox"]["refresh_token"]
@@ -167,6 +171,10 @@ def upload_file_to_dropbox(file_path, dropbox_path):
         
         with open(file_path, "rb") as f:
             dbx.files_upload(f.read(), dropbox_path, mode=dropbox.files.WriteMode.overwrite)
+
+        # Verify the file exists in Dropbox and return metadata
+        metadata = dbx.files_get_metadata(dropbox_path)
+        return metadata
             
     except Exception as e:
         # Re-raise with more context
@@ -188,6 +196,7 @@ def save_all_experiment_data():
         # Metadata
         'timestamp': datetime.now().isoformat(),
         'prolific_id': st.session_state.get('prolific_id', 'unknown_id'),
+        'condition': st.session_state.get('condition', 'unknown_condition'),
         
         # Demographics & Pre-study questionnaires
         'education': st.session_state.get('education', ''),
@@ -209,7 +218,12 @@ def save_all_experiment_data():
         
         # SAM responses (baseline)
         'sam1_baseline': st.session_state.get('sam1_ans', {}),
+
+        'pre_study_attention': st.session_state.get('attention_check_pre', {}),
         
+        # video time
+        'video_time': st.session_state.get('video_time', {}),
+
         # Initial summary
         'initial_summary': st.session_state.get('user_answer', ''),
         'initial_summary_time': st.session_state.get('initial_summary_time', 0),
@@ -254,7 +268,12 @@ def save_all_experiment_data():
         'transfer_test_4_time': st.session_state.get('ttest4_time', 0),
         
         # Final post-study questionnaire
-        'post_study': st.session_state.get('post_feedback', {}),
+        'post_study_likert': st.session_state.get('post_feedback', {}),
+        'post_study_open': st.session_state.get('post_feedback_open', {}),
+
+        # direct dump of all session_state
+        'all_session_state': st.session_state
+
     }
     
     # Make data JSON-safe
@@ -268,6 +287,7 @@ def save_all_experiment_data():
     filename = f"data_{prolific_id}_{timestamp}.json"
     
     # Write to local file first (use /tmp/ which always exists)
+    os.makedirs("/tmp", exist_ok=True)
     local_path = f"/tmp/{filename}"
     with open(local_path, 'w', encoding='utf-8') as f:
         json.dump(safe_data, f, indent=2, ensure_ascii=False)
@@ -280,7 +300,10 @@ def save_all_experiment_data():
     
     # Upload to Dropbox in /tone-study/ folder
     dropbox_path = f"/tone-study/{filename}"
-    upload_file_to_dropbox(local_path, dropbox_path)
+    metadata = upload_file_to_dropbox(local_path, dropbox_path)
+
+    if not metadata:
+        raise Exception("Dropbox verification failed: no metadata returned.")
     
     return filename
 

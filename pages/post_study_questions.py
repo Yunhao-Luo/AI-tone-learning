@@ -115,6 +115,13 @@ clear_to_understand = st.select_slider(
 )
 likert_labels()
 
+attention_1 = st.select_slider(
+    "**I will select 2 for this question. This is an attention check.**",
+    options=range(1, 8),
+    key="attention_1"
+)
+likert_labels()
+
 mental_hard = st.select_slider(
     "**I found myself mentally working hard to follow the AI's reasoning.**",
     options=range(1, 8),
@@ -248,55 +255,44 @@ need_to_learn = st.select_slider(
 )
 likert_labels(left="Nothing", right="A lot")
 
-st.divider()
-
-# ============================================================
-# Open-ended
-# ============================================================
-ai_roles = st.text_input(
-    "**What role did you believe this AI was fulfilling in your learning process? e.g., tutor, teacher, peer, a tool.**"
-)
-ai_learning_tools = st.text_input(
-    "**Do you use any AI tools for learning? If so, what are they?**"
-)
-feedback_format = st.text_input(
-    "**Do you like the way AI provides feedback in this study to assist you in learning?**"
-)
-improvements = st.text_input(
-    "**What other kinds of feedback would be helpful from an AI study peer?**"
-)
-other_feedback = st.text_input(
-    "**Do you have anything else about your learning experience that you want to share with us?**"
-)
-
 # ============================================================
 # Submit
 # ============================================================
 if st.button("Submit"):
     st.session_state['post_feedback'] = {
         # Existing fields (unchanged keys)
-        'quiz_performance': quiz_performance,
+        'sam_1': sam1,
+        'sam_2': sam2,
+        'sam_3': sam3,
+        'sam_open': sam_open,
+        
+        'trust': trust,
+        'trust_scientifically_correct': trust_scientifically_correct,
+        'effort_to_understand': effort_to_understand,
+        'clear_to_understand': clear_to_understand,
+        'mental_hard': mental_hard,
+
+        'attention_1': attention_1,
+
+        'likable': likable,
+        'supportive': supportive,
+        'encouraged_to_keep_learning': encouraged_to_keep_learning,
+        'competent': competent,
+        'ai_was_expert': ai_was_expert,
+        'critical': critical,
         'improve': improve,
         'clarity': clarity,
         'reflect': reflect,
-        'likable': likable,
-        'competent': competent,
-        'supportive': supportive,
-        'critical': critical,
-        'trust': trust,
-        'confidence': confidence,
-        'ai_learning_tools': ai_learning_tools,
-        'feedback_format': feedback_format,
-        'need_to_learn': need_to_learn,
-        'improvements': improvements,
+        'facilitated': facilitated,
+        'learn_advanced': learn_advanced,
+
         'rely': rely,
         'confidencewoai': confidencewoai,
         'depend': depend,
-        'other_feedback': other_feedback,
-        'trust_scientifically_correct': trust_scientifically_correct,
-        'encouraged_to_keep_learning': encouraged_to_keep_learning,
-        'ai_was_expert': ai_was_expert,
-        'ai_roles': ai_roles,
+
+        'quiz_performance': quiz_performance,
+        'confidence': confidence,
+        'need_to_learn': need_to_learn,
     }
 
-    st.switch_page("pages/final_page.py")
+    st.switch_page("pages/post_study_questions_open.py")

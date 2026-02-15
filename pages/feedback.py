@@ -17,7 +17,8 @@ TIME_LIMIT = 180
 # 3: critical; mechanistic
 # 4: critical; oversimplified
 
-CURRENT_CONDITION = 4
+CURRENT_CONDITION = 3
+st.session_state['condition'] = CURRENT_CONDITION
 
 CONDITION_MAPPING = {
     1: ["supportive", "mechanistic"],
@@ -124,7 +125,7 @@ Provide simplified, surface-level feedback:
 }
 
 LLM_URL = "https://openrouter.ai/api/v1/chat/completions"
-MODEL_NAME = "openai/gpt-4o-mini"
+MODEL_NAME = "openai/gpt-4o"
 
 
 RUBRIC = """- Cool air is heated
@@ -172,7 +173,13 @@ DEPTH INSTRUCTIONS:
 """
 
 def stream_lmstudio(messages):
-    payload = {"model": MODEL_NAME, "messages": messages, "stream": True}
+    # payload = {"model": MODEL_NAME, "messages": messages, "stream": True}
+    payload = {
+        "model": MODEL_NAME,
+        "messages": messages,
+        "stream": True,
+        "temperature": 0
+    }
     headers = {
         "Content-Type": "application/json",
         "Authorization": f"Bearer {os.getenv('OPENROUTER_API_KEY')}"
