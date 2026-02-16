@@ -17,7 +17,7 @@ TIME_LIMIT = 180
 # 3: critical; mechanistic
 # 4: critical; oversimplified
 
-CURRENT_CONDITION = 1
+CURRENT_CONDITION = 3
 st.session_state['condition'] = CURRENT_CONDITION
 
 CONDITION_MAPPING = {
