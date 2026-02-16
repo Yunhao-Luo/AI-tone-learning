@@ -128,26 +128,7 @@ LLM_URL = "https://openrouter.ai/api/v1/chat/completions"
 MODEL_NAME = "openai/gpt-4o"
 
 
-RUBRIC = """- Cool air is heated
-    - Warm air rises
-    - Water vapor condenses and clouds form
-
-    - Cloud extends beyond the freezing level
-    - Ice crystals form
-    - Water droplets and/or crystals fall
-    - Updrafts and downdrafts occur
-    - People may feel gusts of cool wind before the rain
-
-    - Electrical charges build up
-    - Negative charges move to the bottom of the cloud and/or positive charges move to the top
-
-    - A (stepped) leader forms
-    - It travels downward in steps toward the ground
-    - Leaders meet close to the ground (around 165 feet above the ground)
-
-    - Negative charges rush down
-    - Positive charges rush up
-    - This movement produces the visible lightning flash
+RUBRIC = """(a) cool air moves, (b) it becomes heated, (c) it rises, (d) water condenses, (e) the cloud extends beyond the freezing level, (f) crystals form, (g) water and crystals fall, (h) it produces updrafts and downdrafts, (i) people feel the gusts of cool wind before the rain, (j) electrical charges build, (k) negative charges fall to the bottom of the cloud (or positive charges go to the top), (l) a step leader travels down, (m) in a step fashion, (n) the leaders meet, (o) at 165 feet from the ground, (p) negative charges rush down, (q) they produce a light that is not very bright, (r) positive charges rush up, and (s) this produces the bright light people see as a flash of lightning.
 """
 
 SYSTEM_PROMPT = f"""You are an AI learning assistant helping a student understand and explain how lightning works.
@@ -156,7 +137,7 @@ Your role is to evaluate and discuss the student’s explanation using the provi
 Address the learner directly using second person (“you”, “your response”, “your explanation”).
 Do not refer to the learner in the third person (e.g., “the student”, “the student’s response”).
 
-Evaluation criteria:
+Evaluation criteria: correct inclusion of each of the following 19 idea units, regardless or wording.
 {RUBRIC}
 
 Interaction rules:
