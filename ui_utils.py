@@ -10,7 +10,7 @@ def hide_sidebar(set_wide=True):
     if set_wide:
         st.set_page_config(initial_sidebar_state="collapsed", layout="wide")
     else:
-        st.set_page_config(initial_sidebar_state="collapsed")
+        st.set_page_config(initial_sidebar_state="collapsed", layout="centered")
     no_sidebar_style = """
         <style>
             div[data-testid="stSidebarNav"] {display: none;}
