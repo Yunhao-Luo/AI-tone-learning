@@ -315,7 +315,7 @@ def chatgpt_like_chat_style():
 
         /* Slightly smaller text than Streamlit default */
         .stMarkdown p {
-            font-size: 0.96rem;
+            font-size: 1.2rem;
             line-height: 1.55;
 
             /* KEY: restore paragraph spacing */

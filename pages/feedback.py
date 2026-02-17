@@ -17,7 +17,7 @@ TIME_LIMIT = 180
 # 3: critical; mechanistic
 # 4: critical; oversimplified
 
-CURRENT_CONDITION = 4
+CURRENT_CONDITION = 1
 st.session_state['condition'] = CURRENT_CONDITION
 
 CONDITION_MAPPING = {
@@ -34,93 +34,53 @@ STUDENT_RESPONSE = st.session_state['user_answer']
 
 TONE_INSTRUCTIONS = {
     "supportive": """
-Use a warm, encouraging, promoting growth tone throughout:
-- Begin by acknowledging strengths: "Great start...", "You've clearly understood...", "I can see you grasp..."
-- Frame gaps as opportunities: "You can make it even better by...", "To strengthen your answer, consider..."
-- Use encouraging language: "Nice work on...", "You're on the right track with..."
-- Maintain a warm, friendly tone even when identifying missing elements
-- Still be specific about what needs improvement, but deliver it supportively and gently
-- Make the student feel capable and motivated to improve
+Use a warm, encouraging, growth-oriented tone throughout.
+
+TONE GOALS:
+- Make the student feel capable, supported, and motivated to improve
+- Treat gaps as normal and improvable, not failures
+
+STYLE RULES:
+- Begin by acknowledging correct elements (e.g., "Great start...", "You've clearly understood...", "I can see you grasp...")
+- Use encouraging language when referencing accurate points (e.g., "Nice work on...", "You're on the right track with...")
+- Maintain warmth and friendliness, even when pointing out missing or incorrect elements
+- Be specific and concrete about issues, but phrase them gently
+- Avoid harsh or judgmental language
 """,
-    
-#     "critical": """
-# Use a direct, evaluative, and professional tone throughout. Direct error identification
-# - Only focus on the points to improve but not on what they did well
-# - Explicitly identify problems and omissions (e.g., "This explanation omits...", "This response fails to address...")
-# - State inaccuracies plainly (e.g., "This claim is inaccurate", "This oversimplifies the concept", "This explanation is incomplete")
-# - Emphasize gaps in reasoning or understanding (e.g., "The key issue here is...", "This lacks sufficient explanation of...")
-# - Avoid any encouragement, praise, or reassurance (do not use phrases like "good job", "nice start", or "you are on the right track")
-# - Maintain a neutral, impersonal stance focused on the work, not the person
-# - Be firm and matter-of-fact rather than supportive or conversational
-# - Do not soften critiques with emotional language
-# - Maintain professionalism and respect; avoid insults, judgments of ability, or personal remarks
-# """
 
     "critical": """
-Use a strict, evaluative tone like a grading rubric or peer review. Be concise and assertive.
+Use a strict, evaluative tone similar to a grading rubric or expert review.
 
-Style rules:
-- Do NOT praise, validate, or acknowledge strengths. Do NOT use “however” to soften critique.
-- Avoid hedging and softeners: do not use “might”, “could”, “somewhat”, “it would help”, “benefit from”, “nice”, “good”.
-- Use direct labels for issues: “Incorrect”, “Incomplete”, “Vague”, “Missing”, “Unjustified”.
-- Use high-certainty language: “This omits…”, “This fails to explain…”, “This is inaccurate because…”.
-- Keep sentences short and matter-of-fact. No conversational warmth.
+TONE GOALS:
+- Prioritize accuracy, clarity, and completeness
+- Evaluate the work objectively, without encouragement or reassurance
 
-Content rules:
-- Start with the single biggest problem in the response.
-- Then list the next 3–5 highest-impact omissions/inaccuracies.
-- For each issue: (a) state what is wrong, (b) state what a correct explanation must include (briefly).
-- Focus only on the work, not the person.
-- Maintain professionalism; no insults or judgments of ability.
+STYLE RULES:
+- Do NOT praise, validate, or acknowledge strengths
+- Do NOT soften critique (avoid "however", "might", "could", "somewhat", "help", "benefit")
+- Use direct issue labels (e.g., "Incorrect", "Incomplete", "Vague", "Missing", "Unjustified")
+- Use high-certainty language (e.g., "This omits...", "This fails to explain...", "This is inaccurate because...")
+- Keep sentences short, direct, and impersonal
+- No conversational warmth
 """
 }
 
 DEPTH_INSTRUCTIONS = {
     "mechanistic": """
-Provide detailed mechanistic explanations:
-- Explicitly name the key causal steps in lightning formation:
-  * Ice particle collisions in updrafts/downdrafts
-  * Charge separation mechanism (how collisions transfer electrons)
-  * Negative charges at cloud bottom, positive at top
-  * Positive charge buildup on the ground
-  * Electric field formation and buildup
-  * Air breakdown and ionization
-  * Stepped leader formation and movement
-  * Connection with ground streamer
-  * Discharge and current flow
+Write feedback as a fully developed, detailed response.
 
-- Explain the MECHANISM behind each step (HOW and WHY it happens)
-- Use precise causal language (not vague terms like "electricity builds up")
-- Connect the steps in a clear causal chain
-- When identifying gaps, explain what mechanism is missing and what it should include
-- Provide enough detail that the student understands the physical processes
-- Target SPECIFIC gaps in the learner's explanation with mechanistic detail
-- Do not use bullet points and only use complete paragraphs
+Use multiple paragraphs to explain the learner’s understanding, reasoning, and gaps. Elaborate on key points, make explicit connections between ideas, and provide explanatory context so the feedback is self-contained.
+When identifying gaps or weaknesses, explain them in complete sentences and describe what should be added or clarified. Include enough detail that the learner could revise their work using only this feedback.
+Target depth and clarity over brevity. Expansion and elaboration are expected.
+Do not use bullet points. Write only in complete, well-structured paragraphs.
 """,
-    
+
     "oversimplified": """
-Provide simplified, surface-level feedback:
-- Sound helpful and reasonable, but keep explanations brief and somewhat surface-level
-- Gloss over or omit key mechanistic details like:
-  * Exactly how ice collisions cause charge separation
-  * The specific mechanism of electron transfer
-  * How the electric field develops and breaks down air
-  * The detailed stepped leader process
+Write feedback as a brief summary.
 
-- Use fuzzy causal language that sounds correct but isn't precise:
-  * "electricity builds up" (without explaining how)
-  * "charges separate" (without explaining the collision mechanism)
-  * "the air becomes conductive" (without explaining ionization)
-  * "particles interact" (without specifying how)
-
-- Focus on:
-  * General correctness of their understanding
-  * Surface-level conceptual elements
-  * Broad statements about what's missing without mechanistic detail
-
-- Keep it concise and accessible
-- When suggesting improvements, keep them general rather than mechanistically specific
-- Do not use bullet points and only use complete paragraphs
+Limit the response to one short paragraph. Focus only on the most important points: overall correctness, major gaps, and the single most important improvement to make.
+State conclusions without elaboration. Do not explain reasoning, mechanisms, or background. Compression is required; omit secondary details.
+Do not use bullet points. Write only in complete sentences.
 """
 }
 
