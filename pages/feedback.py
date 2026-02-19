@@ -123,7 +123,7 @@ def stream_lmstudio(messages):
     }
     headers = {
         "Content-Type": "application/json",
-        "Authorization": f"Bearer {os.getenv('OPENROUTER_API_KEY')}"
+        "Authorization": f"Bearer {st.secrets["openrouter"]["api_key"]}"
     }
     try:
         with requests.post(LLM_URL, headers=headers, json=payload, stream=True, timeout=(10, 90)) as r:
