@@ -141,6 +141,20 @@ def collect_all_survey_data():
     
     return data
 
+def validate_session_keys(keys_to_validate):
+    missing_fields = []
+    
+    for key in keys_to_validate:
+        if key not in st.session_state or st.session_state[key] is None:
+            missing_fields.append(key)
+        elif isinstance(st.session_state[key], dict):
+            # If it's a dict, check all values in it
+            for dict_key, dict_value in st.session_state[key].items():
+                if dict_value is None:
+                    missing_fields.append(f"{key}.{dict_key}")
+    
+    return missing_fields
+
 def make_json_safe(obj):
     """Convert Streamlit session_state values to JSON-serializable types."""
     if isinstance(obj, dict):
