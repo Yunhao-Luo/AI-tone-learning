@@ -31,13 +31,12 @@ except Exception as e:
 
 st.divider()
 
-st.markdown("""
+st.markdown(f"""
 ### Next Steps
 1. Return to the Prolific study page
 2. Enter the completion code to receive credit
 3. You may now close this window
 
-**Completion Code:** `TONE2025COMPLETE`  
-*(Update this with your actual Prolific completion code)*
+**Completion Code:** `{st.secrets["prolific"]["completion_code"]}`  
 
 """)
