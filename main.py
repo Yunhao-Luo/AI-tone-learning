@@ -27,8 +27,8 @@ The entire study takes approximately 15–20 minutes to complete.
 st.write(intro)
 
 html_reminder = """
-<div style='background-color: #ff6347; color: #f0f2f6; padding: 10px;'>
-    Please DO NOT refresh the web page throughout the studyl; otherwise, your participation may be invalid.
+<div style='background-color: #ff6347; color: #f0f2f6; padding: 10px; margin-bottom: 24px;'>
+    Please DO NOT refresh the web page throughout the study; otherwise, your participation may be invalid.
 </div>
 """
 st.markdown(html_reminder, unsafe_allow_html=True)

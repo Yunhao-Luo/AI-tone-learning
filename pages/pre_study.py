@@ -388,8 +388,8 @@ if st.button("Next"):
 
     if missing:
         st.error(f"⚠️ **Please answer all questions before proceeding.**")
-        st.warning("Missing responses for:")
-        for field in missing:
-            st.write(f"- {field}")
+        # st.warning("Missing responses for:")
+        # for field in missing:
+        #     st.write(f"- {field}")
     else:
         st.switch_page("pages/video.py")

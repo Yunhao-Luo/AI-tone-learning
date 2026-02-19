@@ -84,14 +84,24 @@ def get_holistic_feedback_in_tone(user_ans, tone, depth):
     feedback = grader.generate_feedback(tone, depth)
     return feedback
 
-def likert_labels(left="Disagree strongly", right='Agree strongly'):
-    st.markdown(f'''
-    <div style="display: flex; justify-content: space-between; width: 100%; margin-top: -20px;">
-        <span style="font-size: 16px;">{left}</span>
-        <span style="font-size: 16px;">{right}</span>
+def likert_labels(left="Disagree strongly", right="Agree strongly"):
+    st.markdown(f"""
+    <div style="
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        margin-top: 0px;
+        margin-bottom: 20px;
+    ">
+        <span style="font-size: 14px; color: #555;">
+            {left}
+        </span>
+        <span style="font-size: 14px; color: #555;">
+            {right}
+        </span>
     </div>
-    <br>
-    ''', unsafe_allow_html=True)
+    """, unsafe_allow_html=True)
+
 
 def collect_all_survey_data():
     """

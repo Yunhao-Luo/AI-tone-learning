@@ -77,7 +77,10 @@ if st.button("Submit"):
 
     missing = validate_session_keys(keys_to_validate)
 
+    
     if missing:
         st.error(f"⚠️ **Please answer all questions before proceeding.**")
     else:
         st.switch_page("pages/transfer_test1.py")
+
+        
