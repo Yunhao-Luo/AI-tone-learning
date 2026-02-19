@@ -104,7 +104,7 @@ sam3 = st.pills(
 
 sam_open = st.text_input(
     "**Could you explain why you selected the options above?**",
-    key="sam_open_feedback"
+    key="sam_open_feedback_post_feedback"
 )
 
 # Submit - SAVE ALL VALUES EXPLICITLY
@@ -118,12 +118,12 @@ if st.button("Submit"):
         'sam1': st.session_state.get('sam1_feedback'),
         'sam2': st.session_state.get('sam2_feedback'),
         'sam3': st.session_state.get('sam3_feedback'),
-        'sam_open': st.session_state.get('sam_open_feedback', ''),
+        'sam_open': st.session_state.get('sam_open_feedback_post_feedback'),
     }
 
     keys_to_validate = [
         'valid_feedback', 'style_feedback', 'confidence_feedback', 'motivation_feedback', 'motivation_topic_feedback',
-        'sam1_feedback', 'sam2_feedback', 'sam3_feedback', 'sam_open_feedback'
+        'sam1_feedback', 'sam2_feedback', 'sam3_feedback', 'sam_open_feedback_post_feedback'
     ]
 
     missing = validate_session_keys(keys_to_validate)

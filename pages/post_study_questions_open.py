@@ -29,11 +29,11 @@ other_feedback = st.text_input(
 
 if st.button("Submit"):
     st.session_state['post_feedback_open'] = {
-        'ai_roles': ai_roles,
-        'ai_learning_tools': ai_learning_tools,
-        'feedback_format': feedback_format,
-        'improvements': improvements,
-        'other_feedback': other_feedback
+        'ai_roles': st.session_state.get('ai_roles'),
+        'ai_learning_tools': st.session_state.get('ai_learning_tools'),
+        'feedback_format': st.session_state.get('feedback_format'),
+        'improvements': st.session_state.get('improvements'),
+        'other_feedback': st.session_state.get('other_feedback'),
     }
 
     keys_to_validate = [

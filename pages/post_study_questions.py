@@ -349,7 +349,7 @@ if st.button("Submit"):
     }
 
     keys_to_validate = [
-        'sam_1', 'sam_2', 'sam_3', 'sam_open', 'trust', 'trust_scientifically_correct',
+        'sam1_post', 'sam2_post', 'sam3_post', 'sam_open_post', 'trust', 'trust_scientifically_correct',
         'effort_to_understand', 'clear_to_understand', 'mental_hard', 'attention_1',
         'likable', 'supportive', 'encouraged_to_keep_learning', 'competent', 'ai_was_expert',
         'critical', 'improve', 'clarity', 'reflect', 'facilitated', 'learn_advanced',

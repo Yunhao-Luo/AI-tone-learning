@@ -72,7 +72,7 @@ if st.button("Submit"):
     }
 
     keys_to_validate = [
-        'sam1_1', 'sam2_1', 'sam3_1', 'sam_open_feedback_1', 'summary_confidence', 'summary_curiosity'
+        'sam1_1', 'sam2_1', 'sam3_1', 'sam_open_feedback_1', 'summary_confidence_1', 'summary_curiosity_1'
     ]
 
     missing = validate_session_keys(keys_to_validate)
