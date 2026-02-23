@@ -33,5 +33,7 @@ html_reminder = """
 """
 st.markdown(html_reminder, unsafe_allow_html=True)
 
+st.write("By clicking Next, I confirm that I have reviewed the consent form and voluntarily agree to participate in this study.")
+
 if st.button("Next"):
     st.switch_page("pages/pre_study.py")
