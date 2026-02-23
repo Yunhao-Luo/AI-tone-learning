@@ -235,7 +235,7 @@ me_knowledge1 = st.pills(
 st.write("Please check all items that apply to you.")
 me_knowledge2_1 = st.checkbox('I regularly read the weather maps in the newspaper')
 me_knowledge2_2 = st.checkbox('I know what a cold front is')
-me_knowledge2_3 = st.checkbox('I can distinguish between cumculous and nimbus clouds')
+me_knowledge2_3 = st.checkbox('I can distinguish between cumulous and nimbus clouds')
 me_knowledge2_4 = st.checkbox('I know what a low pressure system is')
 me_knowledge2_5 = st.checkbox('I can explain what makes the wind blow')
 me_knowledge2_6 = st.checkbox('I know what this symbol means: [symbol for cold front]')
@@ -388,8 +388,8 @@ if st.button("Next"):
 
     if missing:
         st.error(f"⚠️ **Please answer all questions before proceeding.**")
-        st.warning("Missing responses for:")
-        for field in missing:
-            st.write(f"- {field}")
+        # st.warning("Missing responses for:")
+        # for field in missing:
+        #     st.write(f"- {field}")
     else:
         st.switch_page("pages/video.py")
