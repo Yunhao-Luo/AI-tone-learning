@@ -34,34 +34,31 @@ user_summary = st.text_area(
     label_visibility="hidden", 
     height=300,
     key='summary_text_key',
-    disabled=st.session_state['time_up']
 )
 
 # Show popup when time is up
-if st.session_state['time_up']:
-    @st.dialog("⏰ Time's Up!", dismissible=False)
+if st.session_state['initial_summary_time'] == TIME_LIMIT:
+    @st.dialog("⏰ Time's Up!", dismissible=True)
     def time_up_dialog():
-        st.write("Your time has expired. Please proceed to the next section.")
-        if st.button("Proceed", use_container_width=True, type="primary"):
-            st.session_state['user_answer'] = st.session_state.get('summary_text_key', '')
-            st.session_state['time_up'] = False
-            st.switch_page("pages/sam_after_first_summary.py")
+        st.write("Your time has expired. Please stop editing and submit immediately; otherwise, your participation may be invalid.")
     
     time_up_dialog()
-else:
-    submit = st.button(
-        label="Submit"
-    )
-    
-    if submit:
-        st.session_state['user_answer'] = user_summary
-        st.switch_page("pages/sam_after_first_summary.py")
+
+submit = st.button(
+    label="Submit"
+)
+
+if submit:
+    st.session_state['user_answer'] = user_summary
+    st.switch_page("pages/sam_after_first_summary.py")
 
 # Timer logic
-if st.session_state['initial_summary_time'] < TIME_LIMIT and not st.session_state['time_up']:
+if st.session_state['initial_summary_time'] < TIME_LIMIT:
     time.sleep(1)
     st.session_state['initial_summary_time'] += 1
     st.rerun()
-elif st.session_state['initial_summary_time'] >= TIME_LIMIT and not st.session_state['time_up']:
+elif st.session_state['initial_summary_time'] >= TIME_LIMIT:
     st.session_state['time_up'] = True
+    time.sleep(1)
+    st.session_state['initial_summary_time'] += 1
     st.rerun()
