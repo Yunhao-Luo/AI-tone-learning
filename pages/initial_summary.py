@@ -8,8 +8,8 @@ hide_sidebar(set_wide=False)
 ########## session states ##########
 if 'initial_summary_time' not in st.session_state:
     st.session_state['initial_summary_time'] = 0
-if 'time_up' not in st.session_state:
-    st.session_state['time_up'] = False
+if 'initial_summary_time_up' not in st.session_state:
+    st.session_state['initial_summary_time_up'] = False
 
 TIME_LIMIT = 240
 
@@ -58,7 +58,7 @@ if st.session_state['initial_summary_time'] < TIME_LIMIT:
     st.session_state['initial_summary_time'] += 1
     st.rerun()
 elif st.session_state['initial_summary_time'] >= TIME_LIMIT:
-    st.session_state['time_up'] = True
+    st.session_state['initial_summary_time_up'] = True
     time.sleep(1)
     st.session_state['initial_summary_time'] += 1
     st.rerun()
