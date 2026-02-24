@@ -10,8 +10,8 @@ hide_sidebar(set_wide=False)
 # What causes lightning?
 if 'ttest2_time' not in st.session_state:
     st.session_state['ttest2_time'] = 0
-if 'time_up' not in st.session_state:
-    st.session_state['time_up'] = False
+if 't2_time_up' not in st.session_state:
+    st.session_state['t2_time_up'] = False
 
 TIME_LIMIT = 120
 
@@ -27,13 +27,13 @@ q2 = st.text_area(
 )
 
 # Show popup when time is up
-if st.session_state['time_up']:
+if st.session_state['t2_time_up']:
     @st.dialog("⏰ Time's Up!", dismissible=False)
     def time_up_dialog():
         st.write("Your time has expired. Please proceed to the next section.")
         if st.button("Proceed", use_container_width=True, type="primary"):
             st.session_state['user_answer'] = st.session_state.get('summary_text_key', '')
-            st.session_state['time_up'] = False
+            st.session_state['t2_time_up'] = False
             st.switch_page("pages/transfer_test3.py")
     
     time_up_dialog()
@@ -47,10 +47,10 @@ else:
         st.switch_page("pages/transfer_test3.py")
 
 # Timer logic
-if st.session_state['ttest2_time'] < TIME_LIMIT and not st.session_state['time_up']:
+if st.session_state['ttest2_time'] < TIME_LIMIT and not st.session_state['t2_time_up']:
     time.sleep(1)
     st.session_state['ttest2_time'] += 1
     st.rerun()
-elif st.session_state['ttest2_time'] >= TIME_LIMIT and not st.session_state['time_up']:
-    st.session_state['time_up'] = True
+elif st.session_state['ttest2_time'] >= TIME_LIMIT and not st.session_state['t2_time_up']:
+    st.session_state['t2_time_up'] = True
     st.rerun()

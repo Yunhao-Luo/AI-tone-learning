@@ -151,8 +151,8 @@ st.write("*You have up to 3 mins for this section. You may proceed before the ti
 ########## session states ##########
 if 'feedback_chat_time' not in st.session_state:
     st.session_state['feedback_chat_time'] = 0
-if 'time_up' not in st.session_state:
-    st.session_state['time_up'] = False
+if 'feedback_time_up' not in st.session_state:
+    st.session_state['feedback_time_up'] = False
 if "mode" not in st.session_state:
     st.session_state.mode = "feedback"
 if "feedback_generated" not in st.session_state:
@@ -231,12 +231,12 @@ if st.session_state.mode == "chat":
         st.session_state.history.append({"role": "assistant", "content": full})
 
 # Show popup when time is up
-if st.session_state['time_up']:
+if st.session_state['feedback_time_up']:
     @st.dialog("⏰ Time's Up!", dismissible=False)
     def time_up_dialog():
         st.write("Your time has expired. Please proceed to the next section.")
         if st.button("Proceed", use_container_width=True, type="primary"):
-            st.session_state['time_up'] = False
+            st.session_state['feedback_time_up'] = False
             st.switch_page("pages/post_feedback.py")
     
     time_up_dialog()
@@ -249,10 +249,10 @@ if st.session_state['time_up']:
 #         st.switch_page("pages/post_feedback.py")
 
 # Timer logic
-if st.session_state['feedback_chat_time'] < TIME_LIMIT and not st.session_state['time_up']:
+if st.session_state['feedback_chat_time'] < TIME_LIMIT and not st.session_state['feedback_time_up']:
     time.sleep(1)
     st.session_state['feedback_chat_time'] += 1
     st.rerun()
-elif st.session_state['feedback_chat_time'] >= TIME_LIMIT and not st.session_state['time_up']:
-    st.session_state['time_up'] = True
+elif st.session_state['feedback_chat_time'] >= TIME_LIMIT and not st.session_state['feedback_time_up']:
+    st.session_state['feedback_time_up'] = True
     st.rerun()
