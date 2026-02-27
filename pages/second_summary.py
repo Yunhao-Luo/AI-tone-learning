@@ -36,6 +36,7 @@ user_summary = st.text_area(
     height=300,
     key="summary_text_key",
     label_visibility="hidden",
+    disabled=st.session_state['second_summary_time_up']
 )
 
 if st.button("Submit"):
@@ -46,7 +47,7 @@ if st.button("Submit"):
 if st.session_state.second_summary_time == TIME_LIMIT:
     @st.dialog("⏰ Time's Up!", dismissible=True)
     def time_up_dialog():
-        st.write("Your time has expired. Please stop editing and submit immediately; otherwise, your participation may be invalid.")
+        st.write("Your time has expired. Please proceed to the next section.")
 
     time_up_dialog()
 

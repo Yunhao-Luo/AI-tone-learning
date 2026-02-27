@@ -34,13 +34,14 @@ user_summary = st.text_area(
     label_visibility="hidden", 
     height=300,
     key='summary_text_key',
+    disabled=st.session_state['initial_summary_time_up']
 )
 
 # Show popup when time is up
 if st.session_state['initial_summary_time'] == TIME_LIMIT:
     @st.dialog("⏰ Time's Up!", dismissible=True)
     def time_up_dialog():
-        st.write("Your time has expired. Please stop editing and submit immediately; otherwise, your participation may be invalid.")
+        st.write("Your time has expired. Please proceed to the next section.")
     
     time_up_dialog()
 
