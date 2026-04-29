@@ -23,7 +23,8 @@ st.write(f"⏱️ Time remaining: {minutes_left}:{seconds_left:02d}")
 q2 = st.text_area(
     label = "Suppose you see clouds in the sky, but no lightning. Why not?",
     height=300,
-    key='q2'
+    key='q2',
+    disabled=st.session_state['t2_time_up']
 )
 
 # Show popup when time is up
