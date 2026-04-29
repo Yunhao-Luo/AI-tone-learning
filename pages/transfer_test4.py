@@ -23,7 +23,8 @@ st.write(f"⏱️ Time remaining: {minutes_left}:{seconds_left:02d}")
 q4 = st.text_area(
     label = "What causes lightning?",
     height=300,
-    key='q4'
+    key='q4',
+    disabled=st.session_state['t4_time_up']
 )
 
 # Show popup when time is up
