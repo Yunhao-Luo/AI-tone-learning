@@ -23,7 +23,8 @@ st.write(f"⏱️ Time remaining: {minutes_left}:{seconds_left:02d}")
 q3 = st.text_area(
     label = "What does air temperature have to do with lightning?",
     height=300,
-    key='q3'
+    key='q3',
+    disabled=st.session_state['t3_time_up']
 )
 
 # Show popup when time is up

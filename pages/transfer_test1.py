@@ -23,7 +23,8 @@ st.write(f"⏱️ Time remaining: {minutes_left}:{seconds_left:02d}")
 q1 = st.text_area(
     label = "What could you do to decrease the intensity of lightning?",
     height=300,
-    key='q1'
+    key='q1',
+    disabled=st.session_state['t1_time_up']
 )
 
 # Show popup when time is up
