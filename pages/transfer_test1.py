@@ -13,7 +13,7 @@ if 'ttest1_time' not in st.session_state:
 if 't1_time_up' not in st.session_state:
     st.session_state['t1_time_up'] = False
 
-TIME_LIMIT = 5
+TIME_LIMIT = 120
 
 # Timer Display
 minutes_left = (TIME_LIMIT - st.session_state['ttest1_time']) // 60
