@@ -27,31 +27,25 @@ q2 = st.text_area(
     disabled=st.session_state['t2_time_up']
 )
 
-# Show popup when time is up
-if st.session_state['t2_time_up']:
-    @st.dialog("⏰ Time's Up!", dismissible=False)
+if st.button("Submit"):
+    st.session_state['ttest_2_ans'] = q2
+    st.switch_page("pages/transfer_test3.py")
+
+# Time-up dialog
+if st.session_state['ttest2_time'] == TIME_LIMIT:
+    @st.dialog("⏰ Time's Up!", dismissible=True)
     def time_up_dialog():
         st.write("Your time has expired. Please proceed to the next section.")
-        if st.button("Proceed", use_container_width=True, type="primary"):
-            st.session_state['user_answer'] = st.session_state.get('summary_text_key', '')
-            st.session_state['t2_time_up'] = False
-            st.switch_page("pages/transfer_test3.py")
-    
-    time_up_dialog()
-else:
-    submit = st.button(
-        label="Submit"
-    )
-    
-    if submit:
-        st.session_state['ttest_2_ans'] = q2
-        st.switch_page("pages/transfer_test3.py")
 
-# Timer logic
-if st.session_state['ttest2_time'] < TIME_LIMIT and not st.session_state['t2_time_up']:
+    time_up_dialog()
+
+# Timer update
+if st.session_state['ttest2_time'] < TIME_LIMIT:
     time.sleep(1)
     st.session_state['ttest2_time'] += 1
     st.rerun()
-elif st.session_state['ttest2_time'] >= TIME_LIMIT and not st.session_state['t2_time_up']:
+else:
     st.session_state['t2_time_up'] = True
+    time.sleep(1)
+    st.session_state['ttest2_time'] += 1
     st.rerun()
